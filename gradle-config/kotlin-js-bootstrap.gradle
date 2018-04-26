@@ -1,0 +1,14 @@
+apply plugin: 'kotlin2js'
+apply plugin: 'kotlin-dce-js'
+apply plugin: 'org.jetbrains.kotlin.frontend'
+
+dependencies {
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-js"
+    compile group: "org.jetbrains.kotlin", name: "kotlin-test-js"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

@@ -1,0 +1,72 @@
+buildscript {
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.40"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:1.2.40"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:0.0.27"
+    }
+    repositories {
+        mavenLocal()
+
+        mavenCentral()
+
+        jcenter()
+
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+
+        maven {
+            url "http://dl.bintray.com/kotlin/kotlin-eap"
+        }
+    }
+}
+
+plugins {
+    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+}
+
+def gradleConfigLocation = "${project.projectDir}/../gradle-config"
+
+subprojects {
+    ext.gradleConfigLocation = gradleConfigLocation
+    group 'alloy.simulacrum'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+
+        mavenCentral()
+
+        jcenter()
+
+        maven {
+            url "http://maven.restlet.org"
+        }
+
+        maven {
+            url "https://repo.spring.io/libs-milestone"
+        }
+
+        maven {
+            url "http://dl.bintray.com/kotlin/kotlinx.html"
+        }
+
+        maven {
+            url "http://dl.bintray.com/kotlin/ktor"
+        }
+
+        maven {
+            url "https://dl.bintray.com/kotlin/squash"
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom 'alloy:alloy-bom:1.0-SNAPSHOT'
+        }
+
+        dependencies {
+
+        }
+    }
+}

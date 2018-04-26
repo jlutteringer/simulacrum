@@ -1,0 +1,68 @@
+apply plugin: 'kotlin2js'
+apply plugin: 'kotlin-dce-js'
+apply plugin: 'org.jetbrains.kotlin.frontend'
+
+dependencies {
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-js", version: "1.2.40"
+    compile group: "org.jetbrains.kotlin", name: "kotlin-test-js", version: "1.2.40"
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-html-js", version: "0.6.6"
+}
+
+kotlinFrontend {
+    downloadNodeJsVersion = "8.7.0"
+
+    sourceMaps = false
+
+    npm {
+        dependency("react")
+        dependency("react-dom")
+        dependency("react-router")
+        dependency("react-markdown")
+
+        devDependency("css-loader")
+        devDependency("style-loader")
+        devDependency("babel-loader")
+        devDependency("babel-core")
+        devDependency("karma")
+    }
+
+    webpackBundle {
+        bundleName = "main"
+        sourceMapEnabled = true
+    }
+}
+
+compileKotlin2Js {
+    kotlinOptions.metaInfo = true
+    kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
+    kotlinOptions.sourceMap = true
+    kotlinOptions.moduleKind = 'commonjs'
+    kotlinOptions.main = "call"
+}
+
+sourceSets {
+    main {
+        kotlin.srcDirs += "src/main/js"
+        resources.srcDirs += "src/main/resources"
+        output.resourcesDir = "build/js/resources"
+    }
+    test {
+        kotlin.srcDirs += "src/test/js"
+        resources.srcDirs += "src/test/resources"
+    }
+}
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
