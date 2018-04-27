@@ -1,60 +1,41 @@
-apply plugin: 'kotlin2js'
-apply plugin: 'org.jetbrains.kotlin.frontend'
+apply from: "${gradleConfigLocation}/kotlin-js-bootstrap.gradle"
 
 dependencies {
-    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-js", version: kotlin_version
-    compile group: "org.jetbrains.kotlin", name: "kotlin-test-js", version: kotlin_version
-//    compile group: "org.jetbrains.kotlinx", name: "kotlinx-html-js", version: "0.6.6"
+    compile project(":khaser")
+    compile group: "org.jetbrains.kotlinx", name: "kotlinx-html-js", version: "0.6.6"
+    compile group: "org.jetbrains", name: "kotlin-react", version: "16.2.1-pre.11-kotlin-1.2.21"
 }
 
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
 
-    sourceMaps = false
+    sourceMaps = true
 
     npm {
-//        dependency("react")
-//        dependency("react-dom")
-//        dependency("react-router")
-//        dependency("react-markdown")
-//
-//        devDependency("css-loader")
-//        devDependency("style-loader")
-//        devDependency("babel-loader")
-//        devDependency("babel-core")
-//        devDependency("karma")
+        dependency("react")
+        dependency("react-dom")
+        dependency("react-router")
+        dependency("react-markdown")
+        dependency("phaser")
+
+        devDependency("style-loader")
+        devDependency("babel-loader")
+        devDependency("babel-core")
+        devDependency("karma")
     }
 
     webpackBundle {
         bundleName = "main"
-        sourceMapEnabled = false
+        sourceMapEnabled = true
     }
 
     define "PRODUCTION", false
 }
 
 compileKotlin2Js {
-    kotlinOptions.metaInfo = false
+    kotlinOptions.metaInfo = true
     kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
-    kotlinOptions.sourceMap = false
+    kotlinOptions.sourceMap = true
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
-}
-
-//sourceSets {
-//    main {
-//        kotlin.srcDirs += "src/main/js"
-//        resources.srcDirs += "src/main/resources"
-//        output.resourcesDir = "build/js/resources"
-//    }
-//    test {
-//        kotlin.srcDirs += "src/test/js"
-//        resources.srcDirs += "src/test/resources"
-//    }
-//}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }

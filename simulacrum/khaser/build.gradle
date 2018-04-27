@@ -1,5 +1,4 @@
 apply plugin: 'kotlin2js'
-apply plugin: 'org.jetbrains.kotlin.frontend'
 
 dependencies {
     compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib-js", version: kotlin_version
@@ -12,3 +11,13 @@ kotlin {
         coroutines "enable"
     }
 }
+
+compileKotlin2Js {
+    kotlinOptions.metaInfo = true
+    kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
+    kotlinOptions.sourceMap = true
+    kotlinOptions.moduleKind = 'commonjs'
+    kotlinOptions.main = "call"
+}
+
+group "alloy.khaser"

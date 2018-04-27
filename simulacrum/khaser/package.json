@@ -1,0 +1,26 @@
+{
+    "name": "khazer",
+    "version": "1.0.0-SNAPSHOT",
+    "description": "simple description",
+    "main": "khazer",
+    "dependencies": {
+        "react": "*",
+        "react-dom": "*",
+        "react-router": "*",
+        "react-markdown": "*",
+        "kotlin-test": "file:///Users/jlutteringer/git/simulacrum/simulacrum/khazer/build/node_modules_imported/kotlin-test/",
+        "kotlin": "file:///Users/jlutteringer/git/simulacrum/simulacrum/khazer/build/node_modules_imported/kotlin/"
+    },
+    "devDependencies": {
+        "style-loader": "*",
+        "babel-loader": "*",
+        "babel-core": "*",
+        "karma": "*",
+        "qunitjs": "1.23.1",
+        "karma-qunit": "*",
+        "karma-junit-reporter": "*",
+        "karma-sourcemap-loader": "*",
+        "karma-phantomjs-launcher": "*",
+        "phantomjs-prebuilt": "*"
+    }
+}
