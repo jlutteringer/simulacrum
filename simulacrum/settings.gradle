@@ -7,6 +7,6 @@ rootProject.name = 'simulacrum'
 //include 'bessemer'
 //include 'khazer'
 
-//include 'api'
+include 'api'
 include 'app'
 //include 'core'

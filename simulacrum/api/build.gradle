@@ -1,1 +1,12 @@
 apply from: "${gradleConfigLocation}/kotlin-bootstrap.gradle"
+
+apply plugin: 'org.springframework.boot'
+
+group = 'alloy.simulacrum'
+version = '0.0.1-SNAPSHOT'
+
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+}
