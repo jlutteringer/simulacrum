@@ -4,6 +4,7 @@ dependencies {
     compile project(":khaser")
     compile group: "org.jetbrains.kotlinx", name: "kotlinx-html-js", version: "0.6.6"
     compile group: "org.jetbrains", name: "kotlin-react", version: "16.2.1-pre.11-kotlin-1.2.21"
+    compile group: "org.jetbrains", name: "kotlin-react-dom", version: "16.2.1-pre.11-kotlin-1.2.21"
 }
 
 kotlinFrontend {
@@ -26,6 +27,7 @@ kotlinFrontend {
 
     webpackBundle {
         bundleName = "main"
+        contentPath = file('src/main/web')
         sourceMapEnabled = true
     }
 
@@ -38,4 +40,13 @@ compileKotlin2Js {
     kotlinOptions.sourceMap = true
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
+}
+
+compileTestKotlin2Js {
+  kotlinOptions.metaInfo = true
+  kotlinOptions.outputFile = "$project.buildDir.path/js-tests/${project.name}-tests.js"
+  kotlinOptions.sourceMap = true
+  kotlinOptions.moduleKind = 'commonjs'
+  //    kotlinOptions.moduleName = project.name + "-test"
+  kotlinOptions.main = "call"
 }
