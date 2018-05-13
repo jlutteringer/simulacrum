@@ -18,6 +18,7 @@ kotlinFrontend {
         dependency("react-router")
         dependency("react-markdown")
         dependency("phaser")
+        dependency("react-google-login")
 
         devDependency("style-loader")
         devDependency("babel-loader")
@@ -40,13 +41,6 @@ compileKotlin2Js {
     kotlinOptions.sourceMap = true
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
-}
-
-compileTestKotlin2Js {
-  kotlinOptions.metaInfo = true
-  kotlinOptions.outputFile = "$project.buildDir.path/js-tests/${project.name}-tests.js"
-  kotlinOptions.sourceMap = true
-  kotlinOptions.moduleKind = 'commonjs'
-  //    kotlinOptions.moduleName = project.name + "-test"
-  kotlinOptions.main = "call"
+    // This is a temporary solution TODO why is this necessary?
+    kotlinOptions.sourceMapEmbedSources = "always"
 }

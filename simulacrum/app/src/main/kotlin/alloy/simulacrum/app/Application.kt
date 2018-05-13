@@ -2,17 +2,19 @@ package alloy.simulacrum.app
 
 //import alloy.khaser.Khaser
 //import alloy.khaser.externs.*
+//import react.RProps
+//import react.createElement
+//import react.dom.h1
+//import react.dom.render
+import react.RBuilder
+import react.RComponent
 import react.RProps
-import react.createElement
-import react.dom.h1
-import react.dom.render
+import react.RState
 import kotlin.browser.document
 
-fun main(args: Array<String>) {
-    val rootDiv = document.getElementById("root")
-
-    render(rootDiv) {
-        child(LoginComponent::class){}
+class App : RComponent<RProps, RState>() {
+    override fun RBuilder.render() {
+//        loginComponent()
     }
 
 //    val preload = fun PreloadContext.() {
@@ -67,3 +69,5 @@ fun main(args: Array<String>) {
 //
 //    val game = Game(config)
 }
+
+fun RBuilder.app() = child(App::class) {}
