@@ -11,7 +11,6 @@ dependencies {
 
   compile("org.springframework.security.oauth:spring-security-oauth2")
   compile("org.springframework.cloud:spring-cloud-security:2.0.0.RC1")
-
   compile('com.fasterxml.jackson.module:jackson-module-kotlin')
 
   testCompile('org.springframework.boot:spring-boot-starter-test')

@@ -14,7 +14,7 @@ import kotlin.browser.document
 
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
-//        loginComponent()
+        loginComponent()
     }
 
 //    val preload = fun PreloadContext.() {
