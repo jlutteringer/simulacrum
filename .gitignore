@@ -5,3 +5,5 @@ simulacrum/gradle/wrapper/gradle-wrapper.jar
 simulacrum/gradle/wrapper/gradle-wrapper.properties
 simulacrum/api/gradle/wrapper/gradle-wrapper.jar
 simulacrum/api/gradle/wrapper/gradle-wrapper.properties
+/.gradle
+/build
