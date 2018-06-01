@@ -1,9 +1,9 @@
 .idea
 *.iml
 .gradle
-simulacrum/gradle/wrapper/gradle-wrapper.jar
-simulacrum/gradle/wrapper/gradle-wrapper.properties
-simulacrum/api/gradle/wrapper/gradle-wrapper.jar
-simulacrum/api/gradle/wrapper/gradle-wrapper.properties
-/.gradle
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/api/gradle/wrapper/gradle-wrapper.jar
+/api/gradle/wrapper/gradle-wrapper.properties
 /build
+*/out
