@@ -22,6 +22,15 @@ spring:
   http:
     multipart:
       enabled: false
+  datasource:
+    #initialize: true
+    url: jdbc:mysql://${spring.datasource.domain}/${spring.datasource.database}?${spring.datasource.params}
+    username: root
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+    domain: localhost
+    params:
+    database: simulacrum
 
 assets:
-  directory:
+  directory: ./

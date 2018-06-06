@@ -40,7 +40,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.5.RELEASE'
 }
 
-def gradleConfigLocation = "${project.projectDir}/../gradle-config"
+def gradleConfigLocation = "${project.projectDir}/gradle-config"
 
 subprojects {
     ext.gradleConfigLocation = gradleConfigLocation
@@ -92,6 +92,10 @@ subprojects {
 
         maven {
             url "https://kotlin.bintray.com/kotlin-js-wrappers"
+        }
+
+        maven {
+          url  "https://dl.bintray.com/kotlin/exposed"
         }
     }
 

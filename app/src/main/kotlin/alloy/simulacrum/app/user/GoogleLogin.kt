@@ -1,5 +1,5 @@
 @file:JsModule("react-google-login")
-package alloy.simulacrum.app
+package alloy.simulacrum.app.user
 
 import org.w3c.dom.events.Event
 import react.RClass

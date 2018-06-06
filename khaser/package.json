@@ -8,8 +8,8 @@
         "react-dom": "*",
         "react-router": "*",
         "react-markdown": "*",
-        "kotlin-test": "file:///Users/jlutteringer/git/simulacrum/simulacrum/khazer/build/node_modules_imported/kotlin-test/",
-        "kotlin": "file:///Users/jlutteringer/git/simulacrum/simulacrum/khazer/build/node_modules_imported/kotlin/"
+        "kotlin-test": "file:///Users/jlutteringer/git/simulacrum/khazer/build/node_modules_imported/kotlin-test/",
+        "kotlin": "file:///Users/jlutteringer/git/simulacrum/khazer/build/node_modules_imported/kotlin/"
     },
     "devDependencies": {
         "style-loader": "*",

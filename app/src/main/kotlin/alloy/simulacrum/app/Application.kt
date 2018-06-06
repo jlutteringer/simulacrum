@@ -6,15 +6,17 @@ package alloy.simulacrum.app
 //import react.createElement
 //import react.dom.h1
 //import react.dom.render
+import alloy.simulacrum.app.user.loginComponent
+import alloy.simulacrum.app.user.registerComponent
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import kotlin.browser.document
 
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         loginComponent()
+        registerComponent()
     }
 
 //    val preload = fun PreloadContext.() {

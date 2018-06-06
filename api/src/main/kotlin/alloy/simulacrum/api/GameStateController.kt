@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
 @RestController
-class GameStatController {
-    @GetMapping("/greeting")
+class GameStateController {
+    @GetMapping("/game-state")
     fun greeting(principal: Principal) =
-        "${principal.name}"
+            principal.name
 }

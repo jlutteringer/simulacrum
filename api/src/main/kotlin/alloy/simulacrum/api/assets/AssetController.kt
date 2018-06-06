@@ -11,7 +11,8 @@ import java.io.IOException
 import java.util.stream.Collectors
 
 
-@RestController("/asset")
+@RestController()
+@RequestMapping("/asset")
 class AssetController(private val assetService: AssetService) {
 
     @GetMapping("/")

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull
 
 @ConfigurationProperties("assets")
 @Service
-open class FileAssetService: AssetService {
+class FileAssetService: AssetService {
 
     @NotNull
     lateinit var directory: String

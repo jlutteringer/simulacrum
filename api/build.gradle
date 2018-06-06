@@ -8,10 +8,15 @@ version = '0.0.1-SNAPSHOT'
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-security")
   compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.boot:spring-boot-starter-jdbc')
 
   compile("org.springframework.security.oauth:spring-security-oauth2")
   compile("org.springframework.cloud:spring-cloud-security:2.0.0.RC1")
   compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+  compile 'org.jetbrains.exposed:exposed:0.10.2'
+  compile 'mysql:mysql-connector-java'
+
+  compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
