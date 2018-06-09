@@ -8,5 +8,5 @@ rootProject.name = 'simulacrum'
 include 'khaser'
 
 include 'api'
-include 'app'
+//include 'app'
 //include 'core'

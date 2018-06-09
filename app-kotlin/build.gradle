@@ -19,6 +19,8 @@ kotlinFrontend {
         dependency("react-markdown")
         dependency("phaser")
         dependency("react-google-login")
+        dependency("redux")
+        dependency("react-redux")
 
         devDependency("style-loader")
         devDependency("babel-loader")

@@ -1,9 +1,9 @@
 @file:JsModule("react-google-login")
-package alloy.simulacrum.app.user
+package alloy.simulacrum.app.wrappers
 
+import alloy.simulacrum.app.user.GoogleUser
 import org.w3c.dom.events.Event
-import react.RClass
-import react.RProps
+import react.*
 
 external interface GoogleLoginProps: RProps {
     var clientId: String

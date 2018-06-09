@@ -1,22 +1,26 @@
 package alloy.simulacrum.app
 
-//import alloy.khaser.Khaser
-//import alloy.khaser.externs.*
-//import react.RProps
-//import react.createElement
-//import react.dom.h1
-//import react.dom.render
 import alloy.simulacrum.app.user.loginComponent
 import alloy.simulacrum.app.user.registerComponent
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import alloy.simulacrum.app.wrappers.Provider
+import alloy.simulacrum.app.wrappers.createStore
+import react.*
+
+fun configureStore(): Any {
+    return createStore()
+}
+
+val configuredStore = configureStore()
 
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
-        loginComponent()
-        registerComponent()
+        Provider {
+            attrs {
+                store = configuredStore
+            }
+            loginComponent()
+            registerComponent()
+        }
     }
 
 //    val preload = fun PreloadContext.() {
