@@ -34,3 +34,7 @@ spring:
 
 assets:
   directory: ./
+
+logging:
+  level:
+    root: info
