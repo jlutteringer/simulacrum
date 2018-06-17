@@ -8,7 +8,7 @@ export class Header extends Component {
     return <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Welcome to React</h1>
-      {!this.props.isLoggedIn && <Login {...this.props} />}
+      {!this.props.isLoggedIn && !this.props.isLoading && <Login {...this.props} />}
       {this.props.isLoggedIn && "Logged In!"}
     </header>
   }
