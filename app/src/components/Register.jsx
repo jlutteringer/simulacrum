@@ -2,7 +2,7 @@ import React from 'react'
 import {GoogleLogin} from 'react-google-login';
 import UserActions from '../actions/user-actions';
 
-class RegisterComponent extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -40,4 +40,4 @@ class RegisterComponent extends React.Component {
   }
 }
 
-export default RegisterComponent
+export default Register
