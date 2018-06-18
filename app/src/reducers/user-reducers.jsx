@@ -11,6 +11,8 @@ export function userReducer(state = INITIAL_STATE, action) {
       return { ...state, info: null, status: "LOADING"};
     case TYPES.LOAD_USER_FROM_TOKEN_SUCCESS:
       return { ...state, info: action.user, status: "LOGGED IN"};
+    case TYPES.LOAD_USER_FROM_TOKEN_FAILURE:
+      return { ...state, info: null, status: "LOGGED OUT"};
     case TYPES.LOGIN_USER_SUCCESS:
       return { ...state, info: action.user, status: "LOGGED IN"};
     case TYPES.LOGOUT_USER:

@@ -1,12 +1,3 @@
 rootProject.name = 'simulacrum'
 
-//include 'utilities-core'
-//include 'utilities-java'
-//include 'utilities-js'
-//
-//include 'bessemer'
-//include 'khaser'
-
 include 'api'
-//include 'app'
-//include 'core'

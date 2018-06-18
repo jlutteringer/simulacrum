@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {Header} from "../components/Header";
+import Header from "../components/Header";
 import * as UserActions from "../actions/user-actions";
 
 const mapStateToProps = (state, ownProps) => {

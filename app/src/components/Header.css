@@ -1,0 +1,17 @@
+.App-header {
+    flexGrow: 1;
+}
+
+
+.App-header-title {
+    flex: 1;
+}
+
+.App-header .menuButton {
+    marginLeft: -12px;
+    marginRight: 20px;
+}
+
+.App-logo {
+    height: 50px;
+}

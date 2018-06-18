@@ -46,7 +46,7 @@ export function loadUserFromToken() {
   return (dispatch) => {
     let token = getToken();
     if (!token || token === '') {
-      return;
+      dispatch(loadUserFromTokenFailure("No Token"))
     }
 
     // TODO check for an expired token
@@ -75,7 +75,6 @@ export function loadUserFromTokenSuccess(token, user) {
 }
 
 export function loadUserFromTokenFailure(error) {
-  console.log(error)
   clearToken()
   return {
     type: TYPES.LOAD_USER_FROM_TOKEN_FAILURE,
