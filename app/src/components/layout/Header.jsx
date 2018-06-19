@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import logo from '../static/logo.png';
+import logo from '../../static/logo.png';
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
-import LoginButton from "./login/LoginButton";
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/es/Button/Button";
+import {Link} from "react-router-dom";
 
 const styles = (theme) => ({
   root : {
@@ -25,11 +27,13 @@ const styles = (theme) => ({
 
 class Header extends Component {
   static propTypes = {
-
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    handleLogoutClick: PropTypes.func.isRequired
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleLogoutClick } = this.props;
 
     return (
       <AppBar className={classes.root}>
@@ -41,7 +45,14 @@ class Header extends Component {
           <Typography variant="title" color="inherit" className={classes.appTitle}>
             Simulacrum
           </Typography>
-          <LoginButton {...this.props} />
+          {
+            !this.props.isLoggedIn && !this.props.isLoading &&
+            <Link to="/login"><Button color={"inherit"}>Login</Button></Link>
+          }
+          {
+            this.props.isLoggedIn &&
+            <Button onClick={handleLogoutClick} color={"inherit"}>Logout</Button>
+          }
         </Toolbar>
       </AppBar>
     );
