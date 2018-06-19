@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
-import PageRoutes from "../components/PageRoutes";
 import _ from "lodash";
+import PageRoutes from "../components/PageRoutes";
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -1,40 +1,51 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import logo from '../static/logo.png';
-import Login from "./Login";
-import './Header.css';
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
-import Logout from "./Logout";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
+import LoginButton from "./login/LoginButton";
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Header extends Component {
+const styles = (theme) => ({
+  root : {
+    flexGrow: 1
+  },
+  appTitle : {
+    flex: 1
+  },
+  menuButton : {
+    marginLeft: -12,
+  },
+  appLogo : {
+    height: 30
+  }
+});
+
+class Header extends Component {
+  static propTypes = {
+
+  }
 
   render() {
-    return (
-        <header className="App-header">
-            <AppBar>
-              <Toolbar>
-                <IconButton className={"menu-button"} color="inherit" aria-label="Menu">
-                  <MenuIcon />
-                </IconButton>
-                <img src={logo} className="App-logo" alt="logo"/>
-                <Typography variant="title" color="inherit" className="App-header-title">
-                  Simulacrum
-                </Typography>
+    const { classes } = this.props;
 
-                {!this.props.isLoggedIn && !this.props.isLoading && <Login {...this.props} />}
-                {this.props.isLoggedIn && <Logout {...this.props} />}
-              </Toolbar>
-            </AppBar>
-        </header>
+    return (
+      <AppBar className={classes.root}>
+        <Toolbar>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <img src={logo} className={classes.appLogo} alt="logo"/>
+          <Typography variant="title" color="inherit" className={classes.appTitle}>
+            Simulacrum
+          </Typography>
+          <LoginButton {...this.props} />
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
-Header.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-};
+export default withStyles(styles)(Header);

@@ -11,13 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginSuccess: (googleUser) => {
-      dispatch(UserActions.login(googleUser));
-    },
-    loginFailure: (error) => {
-      console.log("User decided not to login")
-      console.log(error)
-    }
+
   }
 }
 

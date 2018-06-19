@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import _ from 'lodash'
 const ROOT_URL = 'http://localhost:8080';
 
 export const TYPES = {
@@ -45,8 +45,9 @@ export function login(googleUser) {
 export function loadUserFromToken() {
   return (dispatch) => {
     let token = getToken();
-    if (!token || token === '') {
+    if (_.isEmpty(token)) {
       dispatch(loadUserFromTokenFailure("No Token"))
+      return;
     }
 
     // TODO check for an expired token

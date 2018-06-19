@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import AppContainer from "../containers/AppContainer";
 import PageRoutesContainer from "../containers/PageRoutesContainer";
+import AppContainer from "../containers/AppContainer";
 
 export default class AppPage extends Component {
   render() {
