@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../../static/logo.png';
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
@@ -42,7 +41,7 @@ class Header extends Component {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <img src={logo} className={classes.appLogo} alt="logo"/>
+          <img src={'/logo.png'} className={classes.appLogo} alt="logo"/>
           <Typography variant="title" color="inherit" className={classes.appTitle}>
             Simulacrum
           </Typography>
