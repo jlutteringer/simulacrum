@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import HeaderContainer from "../containers/HeaderContainer";
 import MainContainer from "../containers/MainContainer";
 
-export default class HomePage extends Component {
+export default class UserHomePage extends Component {
   render() {
     return (
         <div>

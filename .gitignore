@@ -7,3 +7,4 @@
 /api/gradle/wrapper/gradle-wrapper.properties
 /build
 */out
+npm-debug.log

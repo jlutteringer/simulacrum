@@ -33,7 +33,7 @@ class Header extends Component {
   }
 
   render() {
-    const { classes, handleLogoutClick } = this.props;
+    const { classes } = this.props;
 
     return (
       <AppBar className={classes.root}>
@@ -41,9 +41,13 @@ class Header extends Component {
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <img src={'/logo.png'} className={classes.appLogo} alt="logo"/>
+          <Link to={'/'}>
+            <img src={'/logo.png'} className={classes.appLogo} alt="logo"/>
+          </Link>
           <Typography variant="title" color="inherit" className={classes.appTitle}>
-            Simulacrum
+            <Link to={'/'}>
+              Simulacrum
+            </Link>
           </Typography>
           {
             !this.props.isLoggedIn && !this.props.isLoading &&

@@ -25,13 +25,7 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
         http
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/user/register**",
-                        "/login**",
-                        "/error**"
-                ).permitAll()
-                .anyRequest().authenticated().and()
+                .authorizeRequests().anyRequest().authenticated().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .logout().logoutSuccessUrl("/").permitAll().and()
     }
@@ -54,8 +48,6 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
             if (user == null) {
                 val userDto = UserDTO(email)
                 user = userDetailsService.registerUser(userDto)
-            } else {
-                user = userDetailsService.registerLogin(user)
             }
             user
         }
