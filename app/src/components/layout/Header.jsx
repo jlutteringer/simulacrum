@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/es/Button/Button";
 import {Link} from "react-router-dom";
+import UserNavMenu from "../UserNavMenu";
 
 const styles = (theme) => ({
   root : {
@@ -50,8 +51,7 @@ class Header extends Component {
             <Link to="/login"><Button color={"inherit"}>Login</Button></Link>
           }
           {
-            this.props.isLoggedIn &&
-            <Button onClick={handleLogoutClick} color={"inherit"}>Logout</Button>
+            this.props.isLoggedIn && <UserNavMenu {...this.props} />
           }
         </Toolbar>
       </AppBar>
