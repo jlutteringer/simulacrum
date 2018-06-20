@@ -11,9 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler
 
 @EnableWebSecurity
 @EnableResourceServer
@@ -24,20 +22,14 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource()).and()
-                .authorizeRequests().anyRequest().authenticated().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .logout().logoutSuccessUrl("/").permitAll().and()
-    }
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val cors = UrlBasedCorsConfigurationSource()
-        val config = CorsConfiguration()
-        // TODO How to secure for production?
-        config.applyPermitDefaultValues()
-        cors.registerCorsConfiguration("/**", config)
-        return cors
+                .authorizeRequests()
+                .antMatchers(
+                        "/error"
+                ).permitAll()
+                .anyRequest().authenticated()
+                .antMatchers("/admin/*").hasAnyRole("ROLE_ADMIN").and()
+                .exceptionHandling().accessDeniedHandler(OAuth2AccessDeniedHandler()).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     @Bean

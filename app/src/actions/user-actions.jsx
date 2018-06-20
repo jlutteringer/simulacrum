@@ -1,6 +1,5 @@
 import axios from 'axios'
 import _ from 'lodash'
-const ROOT_URL = 'http://localhost:8080';
 
 export const TYPES = {
   UPDATE_USER: 'UPDATE_USER',
@@ -20,7 +19,9 @@ function setUserToken(token) {
 }
 
 function getToken() {
-  return localStorage.getItem('accessToken');
+  const token = localStorage.getItem('accessToken');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return token
 }
 
 function clearToken() {
@@ -32,7 +33,7 @@ export function login(googleUser) {
   return (dispatch) => {
     setUserToken(googleUser.accessToken)
 
-    return axios.get(`${ROOT_URL}/user`)
+    return axios.get(`/api/user`)
     .then(response => {
       dispatch(loginUserSuccess(response.data))
     })
@@ -51,10 +52,7 @@ export function loadUserFromToken() {
     }
 
     // TODO check for an expired token
-
-    return axios({
-      method: 'get',
-      url: `${ROOT_URL}/user`,
+    return axios.get(`/api/user`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

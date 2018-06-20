@@ -12,7 +12,7 @@ import java.util.stream.Collectors
 
 
 @RestController()
-@RequestMapping("/asset")
+@RequestMapping("/api/asset")
 class AssetController(private val assetService: AssetService) {
 
     @GetMapping("/")

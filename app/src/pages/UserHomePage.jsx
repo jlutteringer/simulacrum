@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import HeaderContainer from "../containers/HeaderContainer";
 import MainContainer from "../containers/MainContainer";
+import UserHomeBodyContainer from "../containers/UserHomeBodyContainer";
 
 export default class UserHomePage extends Component {
   render() {
@@ -8,7 +9,7 @@ export default class UserHomePage extends Component {
         <div>
           <HeaderContainer />
           <MainContainer>
-            <h1>Live Your RPG</h1>
+            <UserHomeBodyContainer />
           </MainContainer>
         </div>
     )
