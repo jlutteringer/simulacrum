@@ -11,7 +11,7 @@ const styles = (themes) => ({
 
 class CampaignBody extends Component {
   static propTypes = {
-    campaignId: PropTypes.string.isRequired,
+    campaignId: PropTypes.number.isRequired,
     loadCampaign: PropTypes.func.isRequired,
     campaign: PropTypes.object
   };

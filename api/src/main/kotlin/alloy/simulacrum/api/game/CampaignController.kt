@@ -9,22 +9,23 @@ import org.springframework.web.bind.annotation.*
 class CampaignController(val campaignService: CampaignService) {
 
     @GetMapping()
-    fun getGames(@AuthenticationPrincipal user: User): List<CampaignDTO> {
-        return campaignService.findAllActiveCampaigns(user)
+    fun getGames(@AuthenticationPrincipal user: User): List<CampaignSummaryDTO> {
+        var campaigns =  campaignService.findAllActiveCampaigns(user)
+        return campaigns
     }
 
     @GetMapping("/{campaignId}")
-    fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
+    fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignSummaryDTO {
         return campaignService.findCampaign(campaignId)
     }
 
     @PostMapping()
-    fun createGame(@AuthenticationPrincipal user: User, @RequestBody campaignDTO: CampaignDTO): CampaignDTO {
-        return campaignService.save(user, campaignDTO)
+    fun createGame(@AuthenticationPrincipal user: User, @RequestBody campaignSummaryDTO: CampaignSummaryDTO): CampaignSummaryDTO {
+        return campaignService.save(user, campaignSummaryDTO)
     }
 
     @DeleteMapping()
-    fun archiveGame(@AuthenticationPrincipal user: User, @RequestBody campaignDTO: CampaignDTO) {
-        campaignService.archive(user, campaignDTO)
+    fun archiveGame(@AuthenticationPrincipal user: User, @RequestBody campaignSummaryDTO: CampaignSummaryDTO) {
+        campaignService.archive(user, campaignSummaryDTO)
     }
 }

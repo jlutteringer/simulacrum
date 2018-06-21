@@ -18,7 +18,7 @@ export function campaignReducer(state = INITIAL_STATE, action) {
     case TYPES.LOAD_CAMPAIGN_FAILURE:
       return { ...state, ...state.instances, isLoading: false, error: action.error};
     case TYPES.ADD_CAMPAIGN_SUCCESS:
-      return { ...state, instances: [...state.instances, action.campaign], error: false};
+      return { ...state, instances: [action.campaign, ...state.instances], error: false};
     case TYPES.ADD_CAMPAIGN_FAILURE:
       return { ...state, error: action.error};
     default:

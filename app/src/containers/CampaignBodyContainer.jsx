@@ -4,7 +4,8 @@ import * as CampaignActions from "../actions/campaign-actions";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    campaign : state.campaigns.current
+    campaign : state.campaigns.current !== null &&
+               state.campaigns.current.id === ownProps.campaignId ? state.campaigns.current : null
   }
 }
 
