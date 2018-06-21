@@ -1,7 +1,6 @@
 package alloy.simulacrum.api.user
 
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils.create
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
@@ -16,7 +15,6 @@ class SimUserDetailsService(val dataSource: DataSource) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails? {
         Database.connect(dataSource)
         return transaction {
-            create (Users, Authorities)
             return@transaction (Users innerJoin Authorities)
                     .select{ Users.username.eq(username!!) }
                     .mapNotNull{ User.wrapRow(it) }
@@ -27,8 +25,6 @@ class SimUserDetailsService(val dataSource: DataSource) : UserDetailsService {
     fun registerUser(userDTO: UserDTO): User {
         Database.connect(dataSource)
         return transaction {
-            create (Users, Authorities)
-
             val newUser = User.new {
                 userName = userDTO.username
                 email = userDTO.username
@@ -48,8 +44,6 @@ class SimUserDetailsService(val dataSource: DataSource) : UserDetailsService {
     fun registerLogin(user: User): User {
         Database.connect(dataSource)
         return transaction {
-            create (Users)
-
             user.lastLogin = DateTime.now()
 
             return@transaction user

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from "prop-types";
 import {GoogleLogin} from "react-google-login";
 import { withStyles } from '@material-ui/core/styles';
-import {Redirect} from "react-router-dom";
 
 const styles = (themes) => ({
   root: {
@@ -20,11 +19,7 @@ class LoginBody extends Component {
   render() {
     const {classes, isLoggedIn, isLoading, loginSuccess, loginFailure} = this.props
 
-    if(isLoggedIn) {
-      return <Redirect to={'/'} />
-    }
-
-    if(isLoading) {
+    if(isLoggedIn || isLoading) {
       return null
     }
 

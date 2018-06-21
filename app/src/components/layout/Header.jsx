@@ -36,7 +36,7 @@ class Header extends Component {
     const { classes } = this.props;
 
     return (
-      <AppBar className={classes.root}>
+      <AppBar className={classes.root} position="static" color="default">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
             <MenuIcon />

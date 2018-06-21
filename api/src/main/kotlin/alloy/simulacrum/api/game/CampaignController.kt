@@ -13,6 +13,11 @@ class CampaignController(val campaignService: CampaignService) {
         return campaignService.findAllActiveCampaigns(user)
     }
 
+    @GetMapping("/{campaignId}")
+    fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
+        return campaignService.findCampaign(campaignId)
+    }
+
     @PostMapping()
     fun createGame(@AuthenticationPrincipal user: User, @RequestBody campaignDTO: CampaignDTO): CampaignDTO {
         return campaignService.save(user, campaignDTO)

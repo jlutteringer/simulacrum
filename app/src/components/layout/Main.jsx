@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
   root: {
-    paddingTop: 90,
     paddingLeft: 32,
     paddingRight: 32
   }
