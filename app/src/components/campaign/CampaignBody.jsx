@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
+import PhaserGame from "./PhaserGame";
 
 const styles = (themes) => ({
   root: {
@@ -9,7 +10,7 @@ const styles = (themes) => ({
   }
 });
 
-class CampaignBody extends Component {
+class CampaignBody extends React.Component {
   static propTypes = {
     campaignId: PropTypes.number.isRequired,
     loadCampaign: PropTypes.func.isRequired,
@@ -31,7 +32,8 @@ class CampaignBody extends Component {
 
     return (
         <div className={classes.root}>
-          {campaign.name}
+          <PhaserGame />
+          {/*Implement sidebar*/}
         </div>
     );
   }
