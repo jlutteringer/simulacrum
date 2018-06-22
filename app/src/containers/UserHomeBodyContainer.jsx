@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import UserHomeBody from "components/UserHomeBody";
+import UserHomeBody from "components/home/UserHomeBody";
 import * as CampaignActions from 'actions/campaign-actions';
 
 const mapStateToProps = (state, ownProps) => {
