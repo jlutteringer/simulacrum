@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import HeaderContainer from "../containers/HeaderContainer";
-import MainContainer from "../containers/MainContainer";
+import HeaderContainer from "containers/HeaderContainer";
+import MainContainer from "containers/MainContainer";
 
 export default class HomePage extends Component {
   render() {

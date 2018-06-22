@@ -1,4 +1,4 @@
-import {TYPES} from "../actions/campaign-actions";
+import {TYPES} from "actions/campaign-actions";
 
 const INITIAL_STATE = {
   isLoading: true,

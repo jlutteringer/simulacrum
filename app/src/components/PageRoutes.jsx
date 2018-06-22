@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
-import FourOhFourPage from "../pages/FourOhFourPage";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import UserHomePage from "../pages/UserHomePage";
-import CampaignPage from "../pages/CampaignPage";
+import FourOhFourPage from "pages/FourOhFourPage";
+import HomePage from "pages/HomePage";
+import LoginPage from "pages/LoginPage";
+import UserHomePage from "pages/UserHomePage";
+import CampaignPage from "pages/CampaignPage";
 
 export default class PageRoutes extends Component {
   componentWillMount() {
