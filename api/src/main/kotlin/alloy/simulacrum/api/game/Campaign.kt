@@ -34,3 +34,24 @@ data class CampaignSummaryDTO(val name: String) {
     }
 }
 
+data class CampaignDTO(val name: String) {
+    var id: Long? = null
+    var lastAccessed: DateTime? = null
+    var gameConfig: GameConfig? = null
+    var sceneConfigs: List<SceneConfig> = listOf()
+
+    constructor(campaign: Campaign): this(campaign.name) {
+        id = campaign.id.value
+        lastAccessed = campaign.lastAccessDate
+
+        // TODO pull game config from DB
+        gameConfig = GameConfig(0)
+
+        // TODO pull scenes from DB
+        sceneConfigs = listOf<SceneConfig>(SceneConfig(0, 20, 15, "SQUARE"))
+
+    }
+}
+
+data class GameConfig(val currentSceneId: Int)
+data class SceneConfig(val sceneId: Int, val width: Int, val height: Int, val pattern: String)

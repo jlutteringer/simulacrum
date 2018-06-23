@@ -53,7 +53,7 @@ class CampaignService(val dataSource: DataSource) {
         }
     }
 
-    fun findCampaign(campaignId: Long): CampaignSummaryDTO {
+    fun findCampaign(campaignId: Long): CampaignDTO {
         Database.connect(dataSource)
         return transaction {
             logger.addLogger(StdOutSqlLogger)
@@ -62,7 +62,7 @@ class CampaignService(val dataSource: DataSource) {
             }.forUpdate().first()
             campaign.lastAccessDate = DateTime.now()
 
-            return@transaction CampaignSummaryDTO(campaign)
+            return@transaction CampaignDTO(campaign)
         }
     }
 }

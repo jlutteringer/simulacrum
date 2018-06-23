@@ -32,7 +32,7 @@ class CampaignBody extends React.Component {
 
     return (
         <div className={classes.root}>
-          <PhaserGame />
+          <PhaserGame {...this.props} />
           {/*Implement sidebar*/}
         </div>
     );

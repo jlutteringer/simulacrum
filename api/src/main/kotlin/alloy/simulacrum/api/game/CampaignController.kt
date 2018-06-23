@@ -15,7 +15,7 @@ class CampaignController(val campaignService: CampaignService) {
     }
 
     @GetMapping("/{campaignId}")
-    fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignSummaryDTO {
+    fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
         return campaignService.findCampaign(campaignId)
     }
 

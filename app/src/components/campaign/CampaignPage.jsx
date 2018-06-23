@@ -9,7 +9,7 @@ export default class CampaignPage extends Component {
 
     return (
         <MainContainer>
-          <CampaignBodyContainer campaignId={campaignId} />
+          <CampaignBodyContainer campaignId={campaignId} {...this.props} />
         </MainContainer>
     )
   }

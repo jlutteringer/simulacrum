@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/es/Button/Button";
 import {Link} from "react-router-dom";
-import UserNavMenu from "components/UserNavMenu";
+import UserNavMenu from "components/layout/UserNavMenu";
 
 const styles = (theme) => ({
   root : {
