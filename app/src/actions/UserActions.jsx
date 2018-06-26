@@ -35,7 +35,7 @@ export function login(googleUser) {
 
     return axios.get(`/api/user`)
     .then(response => {
-      dispatch(loginUserSuccess(response.data))
+      dispatch(loginUserSuccess(response.data, googleUser.accessToken))
     })
     .catch((error) => {
       dispatch(loginUserFailure(error))
@@ -58,18 +58,19 @@ export function loadUserFromToken() {
       }
     })
     .then(response => {
-      dispatch(loadUserFromTokenSuccess(token, response.data))
+      dispatch(loadUserFromTokenSuccess(response.data, token))
     }).catch((error) => {
       dispatch(loadUserFromTokenFailure(error))
     });
   }
 }
 
-export function loadUserFromTokenSuccess(token, user) {
+export function loadUserFromTokenSuccess(user, token) {
   setUserToken(token)
   return {
     type: TYPES.LOAD_USER_FROM_TOKEN_SUCCESS,
-    user
+    user,
+    token
   };
 }
 
@@ -81,10 +82,11 @@ export function loadUserFromTokenFailure(error) {
   };
 }
 
-export function loginUserSuccess(user) {
+export function loginUserSuccess(user, token) {
   return {
     type: TYPES.LOGIN_USER_SUCCESS,
-    user
+    user,
+    token
   };
 }
 

@@ -1,6 +1,6 @@
 package alloy.simulacrum.api.config
 
-import mu.KotlinLogging
+import mu.KLogging
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -9,7 +9,7 @@ import org.springframework.web.context.request.WebRequest
 
 @RestControllerAdvice
 class GlobalRestControllerExceptionHandler {
-    private val logger = KotlinLogging.logger {}
+    companion object: KLogging()
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -32,9 +32,18 @@ spring:
     params:
     database: simulacrum
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings
 assets:
   directory: ./
 
 logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
   level:
-    root: info
+    root: INFO
+    alloy.simulacrum.api: INFO

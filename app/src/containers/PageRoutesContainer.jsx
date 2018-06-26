@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import PageRoutes from "components/PageRoutes";
-import * as UserActions from "actions/user-actions";
+import * as UserActions from "actions/UserActions";
 import {withRouter} from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {

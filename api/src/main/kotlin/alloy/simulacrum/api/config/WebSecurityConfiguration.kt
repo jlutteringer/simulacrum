@@ -22,12 +22,13 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .csrf().disable()
+                .headers().frameOptions().sameOrigin().and()
                 .authorizeRequests()
                 .antMatchers(
                         "/error"
                 ).permitAll()
-                .anyRequest().authenticated()
-                .antMatchers("/admin/*").hasAnyRole("ROLE_ADMIN").and()
+                .antMatchers("/admin/**", "/actuator/**").hasAnyRole("ROLE_ADMIN")
+                .anyRequest().authenticated().and()
                 .exceptionHandling().accessDeniedHandler(OAuth2AccessDeniedHandler()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

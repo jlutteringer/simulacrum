@@ -5,11 +5,8 @@ import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.LongIdTable
 import org.joda.time.DateTime
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.oauth2.provider.OAuth2Authentication
-import java.security.Principal
 
 object Users: LongIdTable() {
     val username = varchar("username", 100).uniqueIndex()
@@ -38,6 +35,14 @@ class User(id: EntityID<Long>) : LongEntity(id), UserDetails {
     var accountLocked by Users.accountLocked
     val authorities by Authority referrersOn Authorities.user
     var lastLogin by Users.lastLogin
+
+    override fun equals(other: Any?): Boolean {
+        if (other is User) {
+            return this.id == other.id
+        }
+
+        return false
+    }
 
     override fun getUsername(): String {
         return userName
@@ -72,8 +77,9 @@ class User(id: EntityID<Long>) : LongEntity(id), UserDetails {
 data class UserDTO(val username: String) {
     val lastName: String? = null
     val firstName: String? = null
+    var userId: Long? = null
 
-    constructor(user: User) : this(user.username)
-    constructor(user: Principal) : this((((user as OAuth2Authentication).userAuthentication as UsernamePasswordAuthenticationToken).principal as User).userName)
+    constructor(user: User) : this(user.username) {
+        this.userId = user.id.value
+    }
 }
-//, val firstName: String = "", val lastName: String = "", val password: String = "", val email: String = "")

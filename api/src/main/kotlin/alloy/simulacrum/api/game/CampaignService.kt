@@ -20,7 +20,7 @@ class CampaignService(val dataSource: DataSource) {
 
             // TODO find all campaign as creator and player
             return@transaction Campaigns.innerJoin(Users)
-                    .select({ Campaigns.creator eq user.id })
+                    .select { Campaigns.creator eq user.id }
                     .orderBy(Campaigns.lastAccessed to false)
                     .map { Campaign.wrapRow(it) }
                     .map { CampaignSummaryDTO(it) }
@@ -46,7 +46,7 @@ class CampaignService(val dataSource: DataSource) {
         Database.connect(dataSource)
         return transaction {
             val campaign = Campaign.find {
-                Campaigns.creator eq user.id and (Campaigns.id eq campaignSummaryDTO.id)
+                Campaigns.creator eq user.id and (Campaigns.id eq campaignSummaryDTO.campaignId)
             }.forUpdate().first()
 
             campaign.archived = true

@@ -58,7 +58,7 @@ class UserHomeBody extends Component {
           {
             campaigns.instances.map(function (campaign, index) {
               return (
-                <GridListTile key={campaign.id} cols={1}>
+                <GridListTile key={campaign.campaignId} cols={1}>
                   <Card className={classes.campaignCard} key={index}>
                     <CardContent>
                       <Typography className={classes.campaignTitle} color="textSecondary">
@@ -66,7 +66,7 @@ class UserHomeBody extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small"><Link to={`/campaign/${campaign.id}`}>Start Playing</Link></Button>
+                      <Button size="small"><Link to={`/campaign/${campaign.campaignId}`}>Start Playing</Link></Button>
                       <Button size="small">More Info</Button>
                     </CardActions>
                   </Card>
