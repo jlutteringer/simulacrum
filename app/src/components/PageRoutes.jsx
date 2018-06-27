@@ -5,7 +5,7 @@ import HomePage from "components/home/HomePage";
 import LoginPage from "components/login/LoginPage";
 import UserHomePage from "components/home/UserHomePage";
 import CampaignPage from "components/campaign/CampaignPage";
-import CampaignInfoPage from "components/campaign/CampaignInfoPage";
+import CampaignInfoPage from "components/campaign/info/CampaignInfoPage";
 
 export default class PageRoutes extends Component {
   componentWillMount() {

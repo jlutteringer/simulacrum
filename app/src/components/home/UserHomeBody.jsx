@@ -67,7 +67,7 @@ class UserHomeBody extends Component {
                     </CardContent>
                     <CardActions>
                       <Button size="small"><Link to={`/campaign/${campaign.campaignId}`}>Start Playing</Link></Button>
-                      <Button size="small">More Info</Button>
+                      <Button size="small"><Link to={`/campaign/${campaign.campaignId}/info`}>More Info</Link></Button>
                     </CardActions>
                   </Card>
                 </GridListTile>
