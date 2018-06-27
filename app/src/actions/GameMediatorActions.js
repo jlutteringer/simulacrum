@@ -12,7 +12,7 @@ export default class ClientActions {
     this.game.addNewPlayer(player)
   }
 
-  localClick(x,y) {
-    this.client.localClick(x,y)
+  localLongPress(x,y) {
+    this.client.localLongPress(x,y)
   }
 }

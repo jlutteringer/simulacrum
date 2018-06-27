@@ -22,12 +22,12 @@ export default class ClientActions {
       self.stompClient.subscribe(`/api/topic/campaign/${self.campaignId}`, function (message) {
         const responseBody = JSON.parse(message.body)
         if(responseBody.userId !== self.userId) {
-          self.processEvent()
+          self.processEvent(responseBody)
         }
       });
-
-      self.sendClientJoin()
     });
+
+    // TODO implement connection reconnect
   }
 
   disconnect() {
@@ -41,9 +41,11 @@ export default class ClientActions {
     })
   }
 
-  localClick(x,y) {
+  localLongPress(x, y) {
     this.send({
-      'type':'click'
+      'type':'click',
+      x,
+      y
     })
   }
 

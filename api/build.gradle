@@ -31,6 +31,7 @@ dependencies {
   compile 'org.jetbrains.exposed:exposed:0.10.2'
   compile 'mysql:mysql-connector-java'
   compile 'io.github.microutils:kotlin-logging:1.5.4'
+  compile 'org.apache.commons:commons-lang3:3.7'
 
   compileOnly "org.springframework.boot:spring-boot-configuration-processor"
 

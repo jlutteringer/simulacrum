@@ -14,7 +14,7 @@ export default class GameMediator {
   }
 
   init() {
-
+    this.game.stage.disableVisibilityChange = true;
   }
 
   preload(){
@@ -71,26 +71,32 @@ export default class GameMediator {
         this.game.camera.x += this.game.origDragPoint.x - this.game.input.activePointer.position.x;
         this.game.camera.y += this.game.origDragPoint.y - this.game.input.activePointer.position.y;
       }
-      if (!this.game.startMouseDown) {
-        this.game.startMouseDown = this.game.time.now;
+
+      if(!this.game.shouldNotEmitLongPress) {
+        if (!this.game.startMouseDown) {
+          this.game.startMouseDown = this.game.time.now;
+          this.game.startMousePos = this.game.input.activePointer.position.clone();
+        } else if (Math.abs(this.game.startMousePos.x - this.game.input.activePointer.x) > 5
+            || Math.abs(this.game.startMousePos.y - this.game.input.activePointer.y) > 5
+        ) {
+          this.game.shouldNotEmitLongPress = true;
+        } else if(this.game.time.now > this.game.startMouseDown + 400) {
+          this.localLongPress(this.game.input.activePointer.x, this.game.input.activePointer.y)
+          this.game.shouldNotEmitLongPress = true;
+        }
       }
 
       // set new drag origin to current position
       this.game.origDragPoint = this.game.input.activePointer.position.clone();
     } else if(this.game.startMouseDown) {
-      if (this.game.startMouseDown && this.game.time.now > this.game.startMouseDown + 100) {
-        // Single click
-        console.log("Click!!")
-        this.click(this.game.input.activePointer.x,this.game.input.activePointer.y)
-      }
-
+      this.game.shouldNotEmitLongPress = false;
       this.game.startMouseDown = false;
       this.game.origDragPoint = null;
     }
   }
 
-  click(x,y) {
-    this.mediator.localClick(x,y)
+  localLongPress(x,y) {
+    this.mediator.localLongPress(x,y)
   }
 
   stop() {
