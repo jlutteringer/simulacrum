@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from "prop-types";
 import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash'
-import PhaserGame from "./PhaserGame";
 import {Redirect} from "react-router-dom";
 
 const styles = (themes) => ({
@@ -11,7 +10,7 @@ const styles = (themes) => ({
   }
 });
 
-class CampaignBody extends React.Component {
+class CampaignInfoBody extends React.Component {
   static propTypes = {
     campaignId: PropTypes.number.isRequired,
     loadCampaign: PropTypes.func.isRequired,
@@ -20,7 +19,8 @@ class CampaignBody extends React.Component {
 
   componentWillMount() {
     if(_.isEmpty(this.props.campaign)) {
-      this.props.loadCampaign(this.props.campaignId);
+      const campaignId = _.toNumber(this.props.campaignId)
+      this.props.loadCampaign(campaignId);
     }
   }
 
@@ -37,11 +37,11 @@ class CampaignBody extends React.Component {
 
     return (
         <div className={classes.root}>
-          <PhaserGame {...this.props} />
-          {/*Implement sidebar*/}
+          {/*TODO create an info page */}
+          {campaign.name}
         </div>
     );
   }
 }
 
-export default withStyles(styles)(CampaignBody)
+export default withStyles(styles)(CampaignInfoBody)

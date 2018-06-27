@@ -1,14 +1,12 @@
 import {connect} from "react-redux";
-import CampaignBody from "components/campaign/CampaignBody";
 import * as CampaignActions from "actions/CampaignActions";
+import CampaignInfoBody from "components/campaign/CampaignInfoBody";
 
 const mapStateToProps = (state, ownProps) => {
   return {
     campaign : state.campaigns.current !== null &&
                state.campaigns.current.campaignId === ownProps.campaignId ? state.campaigns.current : null,
-    token : state.user.token,
-    userId : state.user.info.userId,
-    isLoading : state.campaigns.isLoading
+    isLoading : state.campaigns.isLoading || (state.campaigns.current !== null && state.campaigns.current.campaignId !== ownProps.campaignId)
   }
 }
 
@@ -20,4 +18,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CampaignBody);
+export default connect(mapStateToProps, mapDispatchToProps)(CampaignInfoBody);

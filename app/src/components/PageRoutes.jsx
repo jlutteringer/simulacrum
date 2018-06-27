@@ -5,6 +5,7 @@ import HomePage from "components/home/HomePage";
 import LoginPage from "components/login/LoginPage";
 import UserHomePage from "components/home/UserHomePage";
 import CampaignPage from "components/campaign/CampaignPage";
+import CampaignInfoPage from "components/campaign/CampaignInfoPage";
 
 export default class PageRoutes extends Component {
   componentWillMount() {
@@ -22,7 +23,7 @@ export default class PageRoutes extends Component {
         }}/>
         <Route path={'/login'} component={LoginPage} {...this.props} />
         <PrivateRoute exact path={'/campaign/:campaignId'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
-        <PrivateRoute exact path={'/campaign/:campaignId/info'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
+        <PrivateRoute exact path={'/campaign/:campaignId/info'} component={CampaignInfoPage} isAuthenticated={this.props.isLoggedIn}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     )

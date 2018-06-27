@@ -6,12 +6,12 @@ import UserHomeBodyContainer from "containers/UserHomeBodyContainer";
 export default class UserHomePage extends Component {
   render() {
     return (
-        <div>
+        <React.Fragment>
           <HeaderContainer />
           <MainContainer>
             <UserHomeBodyContainer />
           </MainContainer>
-        </div>
+        </React.Fragment>
     )
   }
 }
