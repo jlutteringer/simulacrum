@@ -20,9 +20,9 @@ export default class PageRoutes extends Component {
         <Route exact path={'/'} render={(props) => {
           return this.props.isLoggedIn ? <UserHomePage {...props} /> : <HomePage {...props} />
         }}/>
-        <AnonymousRoute path={'/login'} component={LoginPage} isAuthenticated={this.props.isLoggedIn}/>
-        <PrivateRoute exact path={'/campaign/:campaignId'} component={CampaignPage}
-                      isAuthenticated={this.props.isLoggedIn}/>
+        <Route path={'/login'} component={LoginPage} {...this.props} />
+        <PrivateRoute exact path={'/campaign/:campaignId'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
+        <PrivateRoute exact path={'/campaign/:campaignId/info'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     )
@@ -30,37 +30,14 @@ export default class PageRoutes extends Component {
 }
 
 const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            isAuthenticated ?
-                (
-                    <Component {...props} />
-                )
-                :
-                (
-                    <Redirect
-                        to={{
-                          pathname: "/login",
-                          state: {from: props.location}
-                        }}
-                    />
-                )
-        }
-    />
-);
-
-const AnonymousRoute = ({ component: Component, isAuthenticated, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            !isAuthenticated ? (
-                <Component {...props} />
-            ) : (
-                <Redirect
-                    from={props.location.pathname}
-                    to={"/"} />
-            )
+    <Route {...rest}
+        render={
+          props => isAuthenticated
+              ? <Component {...props} />
+              : <Redirect to={{
+                pathname: '/login',
+                state: {from: props.location}
+              }}/>
         }
     />
 );

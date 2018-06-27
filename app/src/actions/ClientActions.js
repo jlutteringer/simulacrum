@@ -31,7 +31,9 @@ export default class ClientActions {
   }
 
   disconnect() {
-    this.stompClient.disconnect()
+    if(this.isConnected) {
+      this.stompClient.disconnect()
+    }
   }
 
   // Local Events

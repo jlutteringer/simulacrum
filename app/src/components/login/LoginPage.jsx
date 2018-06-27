@@ -9,7 +9,7 @@ export default class LoginPage extends Component {
         <div>
           <HeaderContainer/>
           <MainContainer>
-            <LoginBodyContainer/>
+            <LoginBodyContainer {...this.props}/>
           </MainContainer>
         </div>
     )
