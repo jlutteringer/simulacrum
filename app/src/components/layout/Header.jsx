@@ -9,10 +9,12 @@ import PropTypes from "prop-types";
 import Button from "@material-ui/core/es/Button/Button";
 import {Link} from "react-router-dom";
 import UserNavMenu from "components/layout/UserNavMenu";
+import UserNotificationMenu from "components/layout/UserNotificationMenu";
 
 const styles = (theme) => ({
   root : {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundImage: 'https://c1.staticflickr.com/5/4259/35185763616_dc78259d19_h.jpg'
   },
   appTitle : {
     flex: 1
@@ -49,9 +51,10 @@ class Header extends Component {
               Simulacrum
             </Link>
           </Typography>
+          { this.props.isLoggedIn && <UserNotificationMenu {...this.props} /> }
           {
             !this.props.isLoggedIn && !this.props.isLoading &&
-            <Link to="/login"><Button color={"inherit"}>Login</Button></Link>
+            <Button color={"inherit"}><Link to="/login">Login</Link></Button>
           }
           {
             this.props.isLoggedIn && <UserNavMenu {...this.props} />

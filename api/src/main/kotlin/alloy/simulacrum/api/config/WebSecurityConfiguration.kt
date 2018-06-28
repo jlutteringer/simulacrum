@@ -1,8 +1,9 @@
 package alloy.simulacrum.api.config
 
-import alloy.simulacrum.api.user.SimUserDetailsService
 import alloy.simulacrum.api.user.User
 import alloy.simulacrum.api.user.UserDTO
+import alloy.simulacrum.api.user.UserService
+import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -34,15 +35,23 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
     }
 
     @Bean
-    fun principalExtractor(userDetailsService: SimUserDetailsService): PrincipalExtractor {
+    fun principalExtractor(userService: UserService): PrincipalExtractor {
         return PrincipalExtractor { map ->
             val email = map!!["email"] as String
-            var user = userDetailsService.loadUserByUsername(email) as User?
+            var user = userService.loadUserByUsername(email) as User?
             if (user == null) {
                 val userDto = UserDTO(email)
-                user = userDetailsService.registerUser(userDto)
+                user = userService.registerUser(userDto)
             }
             user
+        }
+    }
+
+    @Bean
+    fun authoritiesExtractor(userService: UserService): AuthoritiesExtractor {
+        return AuthoritiesExtractor { map ->
+            val email = map!!["email"] as String
+            userService.loadAuthoritiesForUser(email)
         }
     }
 }

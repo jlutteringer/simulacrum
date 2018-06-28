@@ -5,12 +5,12 @@ import MainContainer from "containers/MainContainer";
 export default class HomePage extends Component {
   render() {
     return (
-        <div>
+        <React.Fragment>
           <HeaderContainer />
           <MainContainer>
             <h1>Live Your RPG</h1>
           </MainContainer>
-        </div>
+        </React.Fragment>
     )
   }
 }

@@ -6,6 +6,9 @@ export const TYPES = {
   LOAD_USER_FROM_TOKEN: 'LOAD_USER_FROM_TOKEN',
   LOAD_USER_FROM_TOKEN_SUCCESS: 'LOAD_USER_FROM_TOKEN_SUCCESS',
   LOAD_USER_FROM_TOKEN_FAILURE: 'LOAD_USER_FROM_TOKEN_FAILURE',
+  LOAD_NOTIFICATIONS_START: 'LOAD_NOTIFICATIONS_START',
+  LOAD_NOTIFICATIONS_SUCCESS: 'LOAD_NOTIFICATIONS_SUCCESS',
+  LOAD_NOTIFICATIONS_FAILURE: 'LOAD_NOTIFICATIONS_FAILURE',
   RESET_TOKEN: 'RESET_TOKEN',
   LOGIN_USER_SUCCESS: 'LOGIN_USER_SUCCESS',
   LOGIN_USER_FAILURE: 'LOGIN_USER_FAILURE',
@@ -31,6 +34,7 @@ function clearToken() {
 
 export function login(googleUser) {
   return (dispatch) => {
+    console.log(googleUser)
     setUserToken(googleUser.accessToken)
 
     return axios.get(`/api/user`)
@@ -102,5 +106,38 @@ export function logoutUser() {
 
   return {
     type: TYPES.LOGOUT_USER
+  };
+}
+
+export function loadNotifications() {
+  return (dispatch) => {
+    dispatch(loadNotificationsStart())
+    return axios.get(`/api/user/notifications`)
+    .then(response => {
+      dispatch(loadNotificationsSuccess(response.data))
+    }).catch((error) => {
+      dispatch(loadNotificationsFailure(error))
+    });
+  }
+}
+
+export function loadNotificationsStart(notifications) {
+  return {
+    type: TYPES.LOAD_NOTIFICATIONS_START,
+    notifications
+  };
+}
+
+export function loadNotificationsSuccess(notifications) {
+  return {
+    type: TYPES.LOAD_NOTIFICATIONS_SUCCESS,
+    notifications
+  };
+}
+
+export function loadNotificationsFailure(error) {
+  return {
+    type: TYPES.LOAD_NOTIFICATIONS_FAILURE,
+    error
   };
 }

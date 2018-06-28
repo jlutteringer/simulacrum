@@ -9,7 +9,7 @@ import org.jetbrains.exposed.dao.LongIdTable
 import org.joda.time.DateTime
 
 object Campaigns: LongIdTable() {
-    val creator = reference("user", Users)
+    val creator = reference("creator", Users)
     val archived = bool("archived").default(false)
     val name = varchar("name", 100)
     val lastAccessed = datetime("last_accessed")
