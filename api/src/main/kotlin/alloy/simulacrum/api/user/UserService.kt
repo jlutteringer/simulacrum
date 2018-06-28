@@ -3,9 +3,6 @@ package alloy.simulacrum.api.user
 import alloy.simulacrum.api.Page
 import alloy.simulacrum.api.Pageable
 import alloy.simulacrum.api.field
-import alloy.simulacrum.api.user.notification.Notification
-import alloy.simulacrum.api.user.notification.NotificationDTO
-import alloy.simulacrum.api.user.notification.Notifications
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.select
@@ -69,25 +66,13 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
         }
     }
 
-    fun getNotifications(user: User): List<NotificationDTO> {
-        Database.connect(dataSource)
-        return transaction {
-
-            return@transaction Notifications.innerJoin(Users)
-                    .select { Notifications.user eq user.id }
-                    .orderBy(Notifications.created to false)
-                    .map { Notification.wrapRow(it) }
-                    .map { NotificationDTO(it) }
-        }
-    }
-
     fun findAllUsers(page: Pageable): Page<UserDTO> {
         Database.connect(dataSource)
         return transaction {
             logger.addLogger(StdOutSqlLogger)
             val users = Users
                     .selectAll()
-                    .orderBy( Users.field(page.sortField) to (page.sortDirection != "DESC"))
+                    .orderBy( Users.field(page.sortField) to (page.sortDirection == "DESC"))
                     .limit(page.limit, page.offset)
                     .map { User.wrapRow(it) }
                     .map { UserDTO(it) }
@@ -99,6 +84,28 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
     }
 
     fun read(userId: Long): UserDTO {
-        return UserDTO(User.findById(userId)!!)
+        Database.connect(dataSource)
+        return transaction {
+
+            return@transaction UserDTO(User.findById(userId)!!)
+        }
+    }
+
+    fun delete(userId: Long): UserDTO {
+        Database.connect(dataSource)
+        return transaction {
+            val user = User.findById(userId)!!
+            user.enabled = false
+            return@transaction UserDTO(user)
+        }
+    }
+
+    fun update(userId: Long, userDTO: UserDTO): UserDTO {
+        Database.connect(dataSource)
+        return transaction {
+            val user = User.findById(userId)!!
+            user.enabled = userDTO.enabled!!
+            return@transaction UserDTO(user)
+        }
     }
 }

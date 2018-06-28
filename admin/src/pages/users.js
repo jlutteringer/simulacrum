@@ -1,15 +1,15 @@
 import React from 'react';
-import { List, Datagrid, EmailField, TextField, BooleanField, EditButton, DisabledInput, SimpleForm, Edit } from 'react-admin';
+import { List, Datagrid, EmailField, TextField, BooleanField, EditButton, DisabledInput, SimpleForm, Edit, BooleanInput } from 'react-admin';
 
 export const UserList = (props) => (
     <List {...props}>
       <Datagrid>
-        <TextField source="userId" />
+        <TextField source="id" />
         <EmailField source="username" />
         <TextField source="firstName" />
         <TextField source="lastName" />
         <BooleanField source="enabled" />
-        <EditButton basePath="/user" />
+        <EditButton basePath="/users" />
       </Datagrid>
     </List>
 );
@@ -25,7 +25,7 @@ export const UserEdit = (props) => (
         <DisabledInput source="username" />
         <DisabledInput label="First Name" source="firstName" />
         <DisabledInput label="Last Name" source="lastName" />
-        <BooleanField source="enabled" />
+        <BooleanInput source="enabled" />
       </SimpleForm>
     </Edit>
 );

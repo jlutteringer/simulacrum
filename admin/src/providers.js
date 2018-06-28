@@ -4,7 +4,7 @@ import simpleRestProvider from 'ra-data-simple-rest';
 export const authProvider = (type, params) => {
   if (type === AUTH_LOGIN) {
     const { accessToken } = params;
-    const request = new Request('/api/user', {
+    const request = new Request('/api/users/currentUser', {
       method: 'GET',
       headers: new Headers({ 'Authorization': `Bearer ${accessToken}` }),
     })

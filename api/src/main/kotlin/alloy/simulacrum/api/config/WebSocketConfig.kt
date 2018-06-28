@@ -16,7 +16,7 @@ class WebSocketConfig : WebSocketMessageBrokerConfigurer {
 
         // Prefixes all @MessageMapping to which messages are sent
         config.setApplicationDestinationPrefixes("/api/app")
-        config.setUserDestinationPrefix("/api/user")
+        config.setUserDestinationPrefix("/api/users")
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {

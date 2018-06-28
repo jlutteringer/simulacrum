@@ -37,7 +37,7 @@ export function login(googleUser) {
     console.log(googleUser)
     setUserToken(googleUser.accessToken)
 
-    return axios.get(`/api/user`)
+    return axios.post(`/api/users/login`)
     .then(response => {
       dispatch(loginUserSuccess(response.data, googleUser.accessToken))
     })
@@ -56,11 +56,7 @@ export function loadUserFromToken() {
     }
 
     // TODO check for an expired token
-    return axios.get(`/api/user`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
+    return axios.get(`/api/users/read`)
     .then(response => {
       dispatch(loadUserFromTokenSuccess(response.data, token))
     }).catch((error) => {
@@ -112,7 +108,7 @@ export function logoutUser() {
 export function loadNotifications() {
   return (dispatch) => {
     dispatch(loadNotificationsStart())
-    return axios.get(`/api/user/notifications`)
+    return axios.get(`/api/notifications/currentUser`)
     .then(response => {
       dispatch(loadNotificationsSuccess(response.data))
     }).catch((error) => {
