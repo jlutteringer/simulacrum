@@ -1,41 +1,65 @@
 package alloy.simulacrum.api.game
 
+import alloy.simulacrum.api.Pageable
+import alloy.simulacrum.api.RestUtils
 import alloy.simulacrum.api.user.User
 import mu.KLogging
 import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
+import org.springframework.security.access.prepost.PostAuthorize
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletResponse
 
 @RestController()
-@RequestMapping("/api/campaign")
+@RequestMapping("/api/campaigns")
 class CampaignController(val campaignService: CampaignService) {
     companion object : KLogging()
 
-    @GetMapping()
+    @GetMapping("/currentUser")
     fun getGames(@AuthenticationPrincipal user: User): List<CampaignSummaryDTO> {
-        var campaigns =  campaignService.findAllActiveCampaigns(user)
-        return campaigns
+        return campaignService.findAllActiveCampaigns(user)
     }
 
+    @PostAuthorize("hasRole('ROLE_ADMIN') or (@campaignService.userCanAccess(#user, returnedObject))")
     @GetMapping("/{campaignId}")
     fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
         return campaignService.findCampaign(campaignId)
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping()
+    fun getCampaigns(
+            @AuthenticationPrincipal user: User,
+            response: HttpServletResponse,
+            @RequestParam range: String?,
+            @RequestParam filter: String?,
+            @RequestParam sort: String?
+    ): List<CampaignDTO> {
+        val campaign = campaignService.findAllCampaigns(Pageable(filter, range, sort))
+        RestUtils.setHeaders(response, campaign)
+        return campaign.entries
+    }
+
     @PostMapping()
-    fun createGame(@AuthenticationPrincipal user: User, @RequestBody campaignSummaryDTO: CampaignSummaryDTO): CampaignSummaryDTO {
-        return campaignService.save(user, campaignSummaryDTO)
+    fun createCampaign(@AuthenticationPrincipal user: User, @RequestBody campaignDTO: CampaignDTO): CampaignDTO {
+        return campaignService.create(user, campaignDTO)
     }
 
-    @DeleteMapping()
-    fun archiveGame(@AuthenticationPrincipal user: User, @RequestBody campaignSummaryDTO: CampaignSummaryDTO) {
-        campaignService.archive(user, campaignSummaryDTO)
+    @PutMapping("/{campaignId}")
+    fun updateCampaign(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long, @RequestBody campaignDTO: CampaignDTO): CampaignDTO {
+        return campaignService.update(user, campaignDTO)
     }
 
-    @MessageMapping("/campaign/{campaignId}")
-    @SendTo("/api/topic/campaign/{campaignId}")
+    @DeleteMapping("/{campaignId}")
+    fun archiveCampaign(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long) {
+        campaignService.archive(user, campaignId)
+    }
+
+    @MessageMapping("/campaigns/{campaignId}")
+    @SendTo("/api/topic/campaigns/{campaignId}")
     fun campaignAction(@AuthenticationPrincipal user: User, @DestinationVariable campaignId: Long, campaignAction: CampaignActionDTO): CampaignActionDTO {
         // TODO filter actions?
         logger.info("Action recieved: $campaignAction")

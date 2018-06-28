@@ -25,30 +25,33 @@ class Campaign(id: EntityID<Long>) : LongEntity(id) {
 }
 
 data class CampaignSummaryDTO(val name: String) {
-    var campaignId: Long? = null
+    var id: Long? = null
     var lastAccessed: DateTime? = null
 
     constructor(campaign: Campaign): this(campaign.name) {
-        campaignId = campaign.id.value
+        id = campaign.id.value
         lastAccessed = campaign.lastAccessDate
     }
 }
 
 data class CampaignDTO(val name: String) {
-    var campaignId: Long? = null
+    var id: Long? = null
+    var creator: Long? = null
     var lastAccessed: DateTime? = null
     var gameConfig: GameConfig? = null
     var sceneConfigs: List<SceneConfig> = listOf()
+    var archived: Boolean? = null
 
     constructor(campaign: Campaign): this(campaign.name) {
-        campaignId = campaign.id.value
-        lastAccessed = campaign.lastAccessDate
-
+        this.id = campaign.id.value
+        this.creator = campaign.creator.id.value
+        this.lastAccessed = campaign.lastAccessDate
+        this.archived = campaign.archived
         // TODO pull game config from DB
         gameConfig = GameConfig(0)
 
         // TODO pull scenes from DB
-        sceneConfigs = listOf<SceneConfig>(SceneConfig(0, 20, 15, "SQUARE"))
+        sceneConfigs = listOf(SceneConfig(0, 20, 15, "SQUARE"))
 
     }
 }

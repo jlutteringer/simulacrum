@@ -22,8 +22,8 @@ export default class PageRoutes extends Component {
           return this.props.isLoggedIn ? <UserHomePage {...props} /> : <HomePage {...props} />
         }}/>
         <Route path={'/login'} component={LoginPage} {...this.props} />
-        <PrivateRoute exact path={'/campaign/:campaignId'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
-        <PrivateRoute exact path={'/campaign/:campaignId/info'} component={CampaignInfoPage} isAuthenticated={this.props.isLoggedIn}/>
+        <PrivateRoute exact path={'/campaigns/:campaignId'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
+        <PrivateRoute exact path={'/campaigns/:campaignId/info'} component={CampaignInfoPage} isAuthenticated={this.props.isLoggedIn}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     )

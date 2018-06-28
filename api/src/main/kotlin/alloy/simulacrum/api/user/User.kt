@@ -1,6 +1,7 @@
 package alloy.simulacrum.api.user
 
 import alloy.simulacrum.api.RestUtils
+import com.fasterxml.jackson.annotation.JsonInclude
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
@@ -35,7 +36,7 @@ class User(id: EntityID<Long>) : LongEntity(id), UserDetails {
     var expiredCredentials by Users.expiredCredentials
     var accountExpired by Users.accountExpired
     var accountLocked by Users.accountLocked
-    val authorities by Authority referrersOn Authorities.user
+    val roles by Role referrersOn Roles.user
     var lastLogin by Users.lastLogin
     var created by Users.created
 
@@ -45,6 +46,12 @@ class User(id: EntityID<Long>) : LongEntity(id), UserDetails {
         }
 
         return false
+    }
+
+    override fun hashCode(): Int {
+        var hashCode = 1
+        hashCode = (31 * hashCode + this.id.value).toInt()
+        return hashCode
     }
 
     override fun getUsername(): String {
@@ -73,26 +80,26 @@ class User(id: EntityID<Long>) : LongEntity(id), UserDetails {
     }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return authorities.toMutableList()
+        return roles.toMutableList()
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class UserDTO(val username: String) {
     var lastName: String? = null
     var firstName: String? = null
     var id: Long? = null
     var enabled: Boolean? = null
-//    var created: DateTime? = null
+    var created: DateTime? = null
 
     constructor(user: User) : this(user.username) {
         this.id = user.id.value
         this.lastName = user.lastName
         this.firstName = user.firstName
+        this.created = user.created
 
         if(RestUtils.shouldPopulateAdminFields()) {
             this.enabled = user.enabled
         }
-        // TODO what format should the DTO's created be in
-//        this.created = user.created
     }
 }

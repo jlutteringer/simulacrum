@@ -56,7 +56,7 @@ export function loadUserFromToken() {
     }
 
     // TODO check for an expired token
-    return axios.get(`/api/users/read`)
+    return axios.get(`/api/users/currentUser`)
     .then(response => {
       dispatch(loadUserFromTokenSuccess(response.data, token))
     }).catch((error) => {

@@ -5,8 +5,8 @@ import CampaignInfoBody from "components/campaign/info/CampaignInfoBody";
 const mapStateToProps = (state, ownProps) => {
   return {
     campaign : state.campaigns.current !== null &&
-               state.campaigns.current.campaignId === ownProps.campaignId ? state.campaigns.current : null,
-    isLoading : state.campaigns.isLoading || state.campaigns.current === null || state.campaigns.current.campaignId !== ownProps.campaignId
+               state.campaigns.current.id === ownProps.campaignId ? state.campaigns.current : null,
+    isLoading : state.campaigns.isLoading || state.campaigns.current === null || state.campaigns.current.id !== ownProps.campaignId
   }
 }
 

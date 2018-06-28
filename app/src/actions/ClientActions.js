@@ -19,7 +19,7 @@ export default class ClientActions {
     this.stompClient = Stomp.over(this.socket);
     this.stompClient.connect({}, function (frame) {
       self.isConnected = true
-      self.stompClient.subscribe(`/api/topic/campaign/${self.campaignId}`, function (message) {
+      self.stompClient.subscribe(`/api/topic/campaigns/${self.campaignId}`, function (message) {
         const responseBody = JSON.parse(message.body)
         if(responseBody.userId !== self.userId) {
           self.processEvent(responseBody)
@@ -53,7 +53,7 @@ export default class ClientActions {
 
   send(action) {
     if(this.isConnected) {
-      this.stompClient.send(`/api/app/campaign/${this.campaignId}`, {}, JSON.stringify(action))
+      this.stompClient.send(`/api/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action))
     }
   }
 

@@ -1,12 +1,9 @@
 package alloy.simulacrum.api.user
 
-import alloy.simulacrum.api.Page
-import alloy.simulacrum.api.Pageable
-import alloy.simulacrum.api.field
+import alloy.simulacrum.api.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import org.springframework.security.core.GrantedAuthority
@@ -32,9 +29,20 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
     fun loadAuthoritiesForUser(username: String): List<GrantedAuthority> {
         Database.connect(dataSource)
         return transaction {
-            return@transaction (Authorities innerJoin Users)
+            logger.addLogger(StdOutSqlLogger)
+            val roles = (Roles innerJoin Users)
                     .select{ Users.username.eq(username) }
-                    .mapNotNull{ Authority.wrapRow(it) }
+                    .mapNotNull{ Role.wrapRow(it) }
+
+            val allAuths = mutableListOf<GrantedAuthority>()
+            allAuths.addAll(roles)
+            allAuths.addAll(
+                    Permissions
+                            .select { Permissions.role inList roles.map { it.id } }
+                            .mapNotNull { Permission.wrapRow(it) }
+            )
+
+            return@transaction allAuths
         }
     }
 
@@ -48,9 +56,9 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
                 lastName = userDTO.lastName
             }
 
-            Authority.new {
+            Role.new {
                 user = newUser
-                auth = "ROLE_USER"
+                roleName = "ROLE_USER"
             }
 
             return@transaction newUser
@@ -66,20 +74,20 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
         }
     }
 
-    fun findAllUsers(page: Pageable): Page<UserDTO> {
+    fun findAllUsers(pageable: Pageable): Page<UserDTO> {
         Database.connect(dataSource)
         return transaction {
             logger.addLogger(StdOutSqlLogger)
             val users = Users
-                    .selectAll()
-                    .orderBy( Users.field(page.sortField) to (page.sortDirection == "DESC"))
-                    .limit(page.limit, page.offset)
+                    .withOptionalWhere(Users, pageable.filterField, pageable.filterValues)
+                    .withOptionalOrderBy(Users, pageable.sortField, pageable.sortDirection)
+                    .withOptionalLimit(pageable.limit, pageable.offset)
                     .map { User.wrapRow(it) }
                     .map { UserDTO(it) }
 
             val total = User.all().count()
 
-            return@transaction Page(users, total, page.offset, page.limit)
+            return@transaction Page(users, total, pageable.offset, pageable.limit)
         }
     }
 

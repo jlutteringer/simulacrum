@@ -16,7 +16,7 @@ class UserController(private val userService: UserService) {
         return UserDTO(user)
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     fun login(@AuthenticationPrincipal user: User): UserDTO {
         userService.registerLogin(user)
         return UserDTO(user)
@@ -42,12 +42,12 @@ class UserController(private val userService: UserService) {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping()
-    fun Any.getUsers(
+    fun getUsers(
             @AuthenticationPrincipal user: User,
             response: HttpServletResponse,
-            @RequestParam range: String,
+            @RequestParam range: String?,
             @RequestParam filter: String?,
-            @RequestParam sort: String
+            @RequestParam sort: String?
     ): List<UserDTO> {
         val users = userService.findAllUsers(Pageable(filter, range, sort))
         RestUtils.setHeaders(response, users)

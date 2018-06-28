@@ -19,7 +19,7 @@ class CampaignSessionHandlers {
     lateinit var userRegistry: SimpUserRegistry
 
 //    private val campaignUsers = ConcurrentHashMap<String, MutableList<String>>()
-    private val campaignEndpointRegex = """/api/topic/campaign/([0-9]*)""".toRegex()
+    private val campaignEndpointRegex = """/api/topic/campaigns/([0-9]*)""".toRegex()
 
     @EventListener
     fun connectionEstablished(sce: SessionSubscribeEvent) {
@@ -33,7 +33,7 @@ class CampaignSessionHandlers {
         val campaignId = getCampaignId(sha) ?: return false
         val campaignActionDto = CampaignActionDTO("join")
         campaignActionDto.userId = user.id.value
-        messagingTemplate.convertAndSend("/api/topic/campaign/$campaignId", campaignActionDto)
+        messagingTemplate.convertAndSend("/api/topic/campaigns/$campaignId", campaignActionDto)
 
 //        campaignUsers.compute(campaignId) { campId, list ->
 //            if (list != null) {

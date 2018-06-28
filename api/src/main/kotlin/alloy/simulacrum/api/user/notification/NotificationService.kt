@@ -1,7 +1,6 @@
 package alloy.simulacrum.api.user.notification
 
 import alloy.simulacrum.api.user.User
-import alloy.simulacrum.api.user.Users
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -15,7 +14,7 @@ class NotificationService(val dataSource: DataSource) {
         Database.connect(dataSource)
         return transaction {
 
-            return@transaction Notifications.innerJoin(Users)
+            return@transaction Notifications
                     .select { Notifications.user eq user.id }
                     .orderBy(Notifications.created to false)
                     .map { Notification.wrapRow(it) }

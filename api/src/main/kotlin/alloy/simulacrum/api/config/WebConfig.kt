@@ -3,6 +3,11 @@ package alloy.simulacrum.api.config
 import alloy.simulacrum.api.user.User
 import alloy.simulacrum.api.user.UserDTO
 import alloy.simulacrum.api.user.UserService
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.joda.JodaModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor
 import org.springframework.context.annotation.Bean
@@ -26,7 +31,7 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
                 .headers().frameOptions().sameOrigin().and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/error"
+                        "/error**"
                 ).permitAll()
                 .antMatchers("/admin/**", "/actuator/**").hasAnyRole("ROLE_ADMIN")
                 .anyRequest().authenticated().and()
@@ -54,4 +59,15 @@ class ResourceServiceConfigurer : ResourceServerConfigurerAdapter() {
             userService.loadAuthoritiesForUser(email)
         }
     }
+
+    @Bean
+    fun objectMapper(): ObjectMapper =
+            ObjectMapper()
+                    .registerModule(JodaModule())
+                    .registerModule(ParameterNamesModule())
+                    .registerModule(Jdk8Module())
+                    .registerModule(KotlinModule())
+                    .configure(com.fasterxml.jackson.databind.SerializationFeature.
+                            WRITE_DATES_AS_TIMESTAMPS , false)
+
 }

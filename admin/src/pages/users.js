@@ -1,13 +1,22 @@
 import React from 'react';
-import { List, Datagrid, EmailField, TextField, BooleanField, EditButton, DisabledInput, SimpleForm, Edit, BooleanInput } from 'react-admin';
+import { List, Datagrid, DateField, EmailField, TextField, BooleanField, EditButton, DisabledInput, SimpleForm, Edit, BooleanInput, Filter, ReferenceInput, SelectInput } from 'react-admin';
+
+const UserFilter = (props) => (
+    <Filter {...props}>
+      <ReferenceInput label="User" source="id" reference="users" allowEmpty>
+        <SelectInput optionText="username" />
+      </ReferenceInput>
+    </Filter>
+);
 
 export const UserList = (props) => (
-    <List {...props}>
+    <List {...props} filters={<UserFilter/>}>
       <Datagrid>
         <TextField source="id" />
         <EmailField source="username" />
         <TextField source="firstName" />
         <TextField source="lastName" />
+        <DateField source="created" showTime />
         <BooleanField source="enabled" />
         <EditButton basePath="/users" />
       </Datagrid>

@@ -1,7 +1,8 @@
 package alloy.simulacrum.api.config
 
 import alloy.simulacrum.api.game.Campaigns
-import alloy.simulacrum.api.user.Authorities
+import alloy.simulacrum.api.user.Permissions
+import alloy.simulacrum.api.user.Roles
 import alloy.simulacrum.api.user.Users
 import alloy.simulacrum.api.user.notification.Notifications
 import org.jetbrains.exposed.sql.Database
@@ -20,7 +21,7 @@ class DatabaseConfig(private val dataSource: DataSource) {
         // TODO should this be disabled in production?
         Database.connect(dataSource)
         return transaction {
-            createMissingTablesAndColumns(Users, Authorities, Campaigns, Notifications)
+            createMissingTablesAndColumns(Users, Roles, Permissions, Campaigns, Notifications)
         }
     }
 }

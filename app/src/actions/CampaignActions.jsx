@@ -14,7 +14,7 @@ export const TYPES = {
 export function loadCampaigns() {
   return (dispatch, getState) => {
     dispatch(loadCampaignsStart())
-    return axios.get(`/api/campaign`)
+    return axios.get(`/api/campaigns/currentUser`)
     .then(response => {
       dispatch(loadCampaignsSuccess(response.data))
     }).catch((error) => {
@@ -26,7 +26,7 @@ export function loadCampaigns() {
 export function loadCampaign(campaignId) {
   return (dispatch, getState) => {
     dispatch(loadCampaignStart(campaignId))
-    return axios.get(`/api/campaign/${campaignId}`)
+    return axios.get(`/api/campaigns/${campaignId}`)
     .then(response => {
       dispatch(loadCampaignSuccess(response.data))
     }).catch((error) => {
@@ -37,7 +37,7 @@ export function loadCampaign(campaignId) {
 
 export function createCampaign(campaign) {
   return (dispatch, getState) => {
-    return axios.post(`/api/campaign`, campaign)
+    return axios.post(`/api/campaigns`, campaign)
     .then(response => {
       dispatch(addCampaignSuccess(response.data))
     }).catch((error) => {
