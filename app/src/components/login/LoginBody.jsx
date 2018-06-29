@@ -3,12 +3,34 @@ import PropTypes from "prop-types";
 import {GoogleLogin} from "react-google-login";
 import { withStyles } from '@material-ui/core/styles';
 import {Redirect} from "react-router-dom";
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import Card from "@material-ui/core/es/Card/Card";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
-const styles = (themes) => ({
+const styles = theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'center'
-  }
+
+  },
+  row: {
+  },
+  card: {
+    display: 'flex',
+    minWidth: '25%'
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  appLogo: {
+    height: 75,
+    display: 'block'
+  },
 });
 
 class LoginBody extends Component {
@@ -49,13 +71,25 @@ class LoginBody extends Component {
 
     /*TODO Style the Google Login button according to documentation*/
     return (
-      <div className={classes.root}>
-        <GoogleLogin
-            clientId="1071523839085-1t6k75k97n5sec0osdkn7av98qoffael.apps.googleusercontent.com"
-            onSuccess={loginSuccess}
-            onFailure={loginFailure}
-        />
-      </div>
+        <div className={classes.root}>
+          <div className={classes.row}>
+            <Card className={classes.card}>
+              <CardContent className={classes.content}>
+                <div className={classes.row}>
+                  <img src={'/logo.png'} className={classes.appLogo} alt="logo"/>
+                </div>
+                <div className={classes.row}>
+                  <Typography variant="headline">Login with your Google account</Typography>
+                </div>
+                <GoogleLogin
+                    clientId="1071523839085-1t6k75k97n5sec0osdkn7av98qoffael.apps.googleusercontent.com"
+                    onSuccess={loginSuccess}
+                    onFailure={loginFailure}
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
     );
   }
 }
