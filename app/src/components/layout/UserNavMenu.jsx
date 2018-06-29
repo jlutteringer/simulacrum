@@ -6,6 +6,13 @@ import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
+import {withStyles} from "@material-ui/core/styles/index";
+
+const styles = (theme) => ({
+  root: {
+
+  }
+})
 
 class UserNavMenu extends Component {
   static propTypes = {
@@ -32,12 +39,11 @@ class UserNavMenu extends Component {
 
   render() {
     const { anchorEl} = this.state;
-    const { handleLogoutClick } = this.props;
+    const { handleLogoutClick, classes } = this.props;
 
     return (
-        <React.Fragment>
+        <div className={classes.userNavMenu}>
           <IconButton
-
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}
@@ -54,9 +60,9 @@ class UserNavMenu extends Component {
               <ListItemText primary={"Logout"}  />
             </MenuItem>
           </Menu>
-        </React.Fragment>
+        </div>
     );
   }
 }
 
-export default UserNavMenu;
+export default withStyles(styles)(UserNavMenu);

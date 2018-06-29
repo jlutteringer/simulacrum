@@ -6,6 +6,7 @@ import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.LongIdTable
+import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 
 object Campaigns: LongIdTable() {
@@ -22,6 +23,12 @@ class Campaign(id: EntityID<Long>) : LongEntity(id) {
     var name by Campaigns.name
     var archived by Campaigns.archived
     var lastAccessDate by Campaigns.lastAccessed
+    var players by User via CampaignPlayers
+}
+
+object CampaignPlayers : Table() {
+    val campaign = reference("campaign_id", Campaigns).primaryKey(0)
+    val player = reference("player_id", Users).primaryKey(1)
 }
 
 data class CampaignSummaryDTO(val name: String) {
@@ -41,12 +48,15 @@ data class CampaignDTO(val name: String) {
     var gameConfig: GameConfig? = null
     var sceneConfigs: List<SceneConfig> = listOf()
     var archived: Boolean? = null
+    var playerIds: List<Long>? = null
 
     constructor(campaign: Campaign): this(campaign.name) {
         this.id = campaign.id.value
         this.creator = campaign.creator.id.value
         this.lastAccessed = campaign.lastAccessDate
         this.archived = campaign.archived
+        this.playerIds = campaign.players.map { it.id.value }
+
         // TODO pull game config from DB
         gameConfig = GameConfig(0)
 

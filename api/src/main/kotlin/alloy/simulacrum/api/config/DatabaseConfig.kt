@@ -1,5 +1,6 @@
 package alloy.simulacrum.api.config
 
+import alloy.simulacrum.api.game.CampaignPlayers
 import alloy.simulacrum.api.game.Campaigns
 import alloy.simulacrum.api.user.Permissions
 import alloy.simulacrum.api.user.Roles
@@ -21,7 +22,8 @@ class DatabaseConfig(private val dataSource: DataSource) {
         // TODO should this be disabled in production?
         Database.connect(dataSource)
         return transaction {
-            createMissingTablesAndColumns(Users, Roles, Permissions, Campaigns, Notifications)
+            createMissingTablesAndColumns(Users, Roles, Permissions, Campaigns, Notifications,
+                    CampaignPlayers)
         }
     }
 }

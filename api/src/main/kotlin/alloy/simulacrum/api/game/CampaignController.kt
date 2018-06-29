@@ -59,7 +59,7 @@ class CampaignController(val campaignService: CampaignService) {
     }
 
     @MessageMapping("/campaigns/{campaignId}")
-    @SendTo("/api/topic/campaigns/{campaignId}")
+    @SendTo("/api/ws/topic/campaigns/{campaignId}")
     fun campaignAction(@AuthenticationPrincipal user: User, @DestinationVariable campaignId: Long, campaignAction: CampaignActionDTO): CampaignActionDTO {
         // TODO filter actions?
         logger.info("Action recieved: $campaignAction")

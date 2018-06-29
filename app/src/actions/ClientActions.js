@@ -6,7 +6,7 @@ export default class ClientActions {
   constructor(mediator, config, token, userId) {
     this.config = config
     this.token = token
-    this.campaignId = config.campaignId
+    this.campaignId = config.id
     this.userId = userId
     this.mediator = mediator
     this.mediator.setClient(this)
@@ -15,11 +15,11 @@ export default class ClientActions {
   connect() {
     const self = this
 
-    this.socket = new SockJS(`/api/socket?access_token=${this.token}`);
+    this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
     this.stompClient = Stomp.over(this.socket);
     this.stompClient.connect({}, function (frame) {
       self.isConnected = true
-      self.stompClient.subscribe(`/api/topic/campaigns/${self.campaignId}`, function (message) {
+      self.stompClient.subscribe(`/api/ws/topic/campaigns/${self.campaignId}`, function (message) {
         const responseBody = JSON.parse(message.body)
         if(responseBody.userId !== self.userId) {
           self.processEvent(responseBody)
@@ -53,7 +53,7 @@ export default class ClientActions {
 
   send(action) {
     if(this.isConnected) {
-      this.stompClient.send(`/api/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action))
+      this.stompClient.send(`/api/ws/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action))
     }
   }
 

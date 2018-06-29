@@ -75,7 +75,6 @@ export function loadUserFromTokenSuccess(user, token) {
 }
 
 export function loadUserFromTokenFailure(error) {
-  clearToken()
   return {
     type: TYPES.LOAD_USER_FROM_TOKEN_FAILURE,
     error

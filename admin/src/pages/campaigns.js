@@ -1,5 +1,6 @@
 import React from 'react';
-import { List, Datagrid, DateField, TextField, TextInput, BooleanField, EditButton, DisabledInput, SimpleForm, Edit, BooleanInput, ReferenceField } from 'react-admin';
+import { List, Datagrid, DateField, TextField, TextInput, BooleanField, EditButton, DisabledInput, SimpleForm, Edit, BooleanInput, ReferenceField,
+  ReferenceArrayInput, SelectArrayInput} from 'react-admin';
 
 export const CampaignList = (props) => (
     <List {...props}>
@@ -26,6 +27,9 @@ export const CampaignEdit = (props) => (
         <DisabledInput source="id" />
         <DisabledInput source="lastAccessed" />
         <TextInput label="Name" source="name" />
+        <ReferenceArrayInput label="Players" source="playerIds" reference="users">
+          <SelectArrayInput optionText="username" />
+        </ReferenceArrayInput>
         <BooleanInput source="archived" />
       </SimpleForm>
     </Edit>

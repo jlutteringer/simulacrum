@@ -11,6 +11,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
+import axios from 'axios'
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +31,17 @@ const store = createStore(
 const jss = create(jssPreset());
 
 const generateClassName = createGenerateClassName();
+
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+    localStorage.clear()
+    window.location = "/login"
+  } else {
+    return Promise.reject(error);
+  }
+});
 
 class App extends Component {
 

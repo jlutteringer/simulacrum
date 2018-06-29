@@ -20,4 +20,18 @@ class Permission(id: EntityID<Int>) : IntEntity(id), GrantedAuthority {
     override fun getAuthority(): String {
         return permissionName
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+        if (other !is GrantedAuthority) {
+            return false
+        }
+        return this.authority == other.authority
+    }
+
+    override fun hashCode(): Int {
+        return authority.hashCode()
+    }
 }

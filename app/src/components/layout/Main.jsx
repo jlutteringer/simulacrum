@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
-  root: {
+  main: {
     paddingLeft: 32,
-    paddingRight: 32
+    paddingRight: 32,
+    minHeight: 100
   }
 });
 
@@ -17,7 +18,7 @@ class Main extends Component {
     const { classes } = this.props;
 
     return (
-        <main className={classes.root}>
+        <main className={classes.main}>
           {this.props.children}
         </main>
     );

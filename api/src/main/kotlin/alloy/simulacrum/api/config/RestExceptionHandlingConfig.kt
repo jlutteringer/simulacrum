@@ -4,7 +4,6 @@ import mu.KLogging
 import org.springframework.http.ResponseEntity
 import org.springframework.http.server.ServletServerHttpRequest
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import org.springframework.web.util.WebUtils
@@ -16,7 +15,7 @@ class GlobalRestControllerExceptionHandler: ResponseEntityExceptionHandler() {
     companion object: KLogging()
 
     @ExceptionHandler(Exception::class)
-    fun unknownExpection(ex: Exception, req: WebRequest, resp: HttpServletResponse): ResponseEntity<Any>? {
+    fun unknownExpection(ex: Exception, req: HttpServletRequest, resp: HttpServletResponse): ResponseEntity<Any>? {
         logger.error { ex }
         if(resp.isCommitted) {
             return null
@@ -27,10 +26,10 @@ class GlobalRestControllerExceptionHandler: ResponseEntityExceptionHandler() {
 }
 
 @RestController
-@RequestMapping("/api/**")
+@RequestMapping("/api/[^w]?[^s]?**")
 class RestControllerFourOhFour {
     @RequestMapping(method = arrayOf(RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE))
-    fun catchAllAPIRequest(request: HttpServletRequest) {
+    fun catchAllAPIRequest(request: HttpServletRequest): Any? {
         throw NoHandlerFoundException(request.method, getRequestUri(request),
                 ServletServerHttpRequest(request).headers)
     }

@@ -84,6 +84,10 @@ class Pageable {
                 val (filterField, filterValues) = match.destructured
                 this.filterField = filterField
                 this.filterValues = filterValues.split(",")
+                if(filterValues.isEmpty()) {
+                    this.filterField = null
+                    this.filterValues = null
+                }
             }
         }
 

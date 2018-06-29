@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import HeaderContainer from "components/layout/HeaderContainer";
 import MainContainer from "components/layout/MainContainer";
+import Footer from "components/layout/Footer";
 
 export default class HomePage extends Component {
   render() {
@@ -8,8 +9,9 @@ export default class HomePage extends Component {
         <React.Fragment>
           <HeaderContainer />
           <MainContainer>
-            <h1>Live Your RPG</h1>
+
           </MainContainer>
+          <Footer />
         </React.Fragment>
     )
   }

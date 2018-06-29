@@ -3,10 +3,7 @@ package alloy.simulacrum.api.game
 import alloy.simulacrum.api.*
 import alloy.simulacrum.api.user.User
 import alloy.simulacrum.api.user.Users
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.StdOutSqlLogger
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 import org.springframework.stereotype.Service
@@ -21,8 +18,8 @@ class CampaignService(val dataSource: DataSource) {
             logger.addLogger(StdOutSqlLogger)
 
             // TODO find all campaign as creator and player
-            return@transaction Campaigns.innerJoin(Users)
-                    .select { Campaigns.creator eq user.id and Campaigns.archived.eq(false) }
+            return@transaction Campaigns.leftJoin(CampaignPlayers)
+                    .select { ((CampaignPlayers.player eq user.id) or (Campaigns.creator eq user.id)) and Campaigns.archived.eq(false)  }
                     .orderBy(Campaigns.lastAccessed to false)
                     .map { Campaign.wrapRow(it) }
                     .map { CampaignSummaryDTO(it) }
@@ -55,7 +52,10 @@ class CampaignService(val dataSource: DataSource) {
 
             campaign.name = campaignDTO.name
             campaign.archived = campaignDTO.archived ?: false
-
+            if(campaignDTO.playerIds != null) {
+                val players = User.wrapRows(Users.select { Users.id.inList(campaignDTO.playerIds!!) })
+                campaign.players = players
+            }
             return@transaction CampaignDTO(campaign)
         }
     }

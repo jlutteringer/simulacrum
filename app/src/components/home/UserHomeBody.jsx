@@ -8,26 +8,33 @@ import CardActions from "@material-ui/core/es/CardActions/CardActions";
 import Button from "@material-ui/core/es/Button/Button";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
-import GridListTile from "@material-ui/core/es/GridListTile/GridListTile";
-import GridList from "@material-ui/core/es/GridList/GridList";
 import {Link} from "react-router-dom";
+import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 const styles = (theme) => ({
-  campaigns: {
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
-      overflow: 'hidden',
-      backgroundColor: theme.palette.background.paper,
-    },
-    gridList: {
-      width: 500,
-      height: 450,
-    },
-    subheader: {
-      width: '100%',
-    },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'start',
+    overflow: 'hidden',
+  },
+  campaignGrid: {
+    marginBottom: 0
+  },
+  campaignCard: {
+    width: '250px',
+    maxWidth: '100%',
+    margin: 'auto',
+    marginBottom: 16
+  },
+  subheader: {
+    width: '100%',
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%',
+    width: '100%'
   }
 });
 
@@ -42,38 +49,43 @@ class UserHomeBody extends Component {
   }
 
   renderCampaigns() {
-    const {campaigns, createCampaign} = this.props
-
-    const classes = this.props.classes.campaigns;
+    const {campaigns, classes, createCampaign} = this.props
 
     return (
         <div className={classes.root} elevation={4}>
-          <Typography variant="headline" component="h2">
-            Campaigns
-            <IconButton onClick={() => createCampaign({"name": "Test!!"})} color={"inherit"}>
-              <AddCircleOutlineIcon/>
-            </IconButton>
-          </Typography>
-          <GridList cellHeight={160} className={classes.gridList} cols={4}>
+          <div>
+            <Typography variant="headline" component="h2" align={"center"}>
+              Campaigns
+              <IconButton onClick={() => createCampaign({"name": "Test!!"})} color={"inherit"}>
+                <AddCircleOutlineIcon/>
+              </IconButton>
+            </Typography>
+          </div>
+          <Grid container spacing={32} className={classes.campaignGrid}>
           {
             campaigns.instances.map(function (campaign, index) {
               return (
-                <GridListTile key={campaign.id} cols={1}>
-                  <Card className={classes.campaignCard} key={index}>
+                <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={index}>
+                  <Card className={classes.campaignCard}>
+                    <CardMedia
+                        image="http://via.placeholder.com/250x150"
+                        title="Placeholder"
+                        className={classes.media}
+                    />
                     <CardContent>
-                      <Typography className={classes.campaignTitle} color="textSecondary">
+                      <Typography className={classes.campaignTitle} color="primary">
                         {campaign.name}
                       </Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small"><Link to={`/campaigns/${campaign.id}`}>Start Playing</Link></Button>
-                      <Button size="small"><Link to={`/campaigns/${campaign.id}/info`}>More Info</Link></Button>
+                      <Button size="small"><Link to={`/campaigns/${campaign.id}/info`}>Campaign Info</Link></Button>
                     </CardActions>
                   </Card>
-                </GridListTile>
+                </Grid>
               )})
           }
-          </GridList>
+          </Grid>
         </div>
     )
   }
@@ -81,10 +93,16 @@ class UserHomeBody extends Component {
   render() {
     return (
         <React.Fragment>
-          <h1>Live Your RPG</h1>
-          {
-            this.renderCampaigns()
-          }
+          <Grid container>
+            <Grid item sm={12} md={8}>
+              {
+                this.renderCampaigns()
+              }
+            </Grid>
+            <Grid item sm={12} md={4}>
+
+            </Grid>
+          </Grid>
         </React.Fragment>
     );
   }
