@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import HeaderContainer from "containers/HeaderContainer";
-import LoginBodyContainer from "containers/LoginBodyContainer";
-import MainContainer from "containers/MainContainer";
+import HeaderContainer from "components/layout/HeaderContainer";
+import LoginBodyContainer from "components/login/LoginBodyContainer";
+import MainContainer from "components/layout/MainContainer";
 
 export default class LoginPage extends Component {
   render() {

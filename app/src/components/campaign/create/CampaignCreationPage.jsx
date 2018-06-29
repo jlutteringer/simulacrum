@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import CampaignCreationBodyContainer from "containers/CampaignCreationBodyContainer";
-import MainContainer from "containers/MainContainer";
+import CampaignCreationBodyContainer from "components/campaign/create/CampaignCreationBodyContainer";
+import MainContainer from "components/layout/MainContainer";
 import _ from 'lodash'
-import HeaderContainer from "containers/HeaderContainer";
+import HeaderContainer from "components/layout/HeaderContainer";
 
 export default class CampaignCreationPage extends Component {
   render() {

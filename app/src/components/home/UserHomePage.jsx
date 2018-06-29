@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import HeaderContainer from "containers/HeaderContainer";
-import MainContainer from "containers/MainContainer";
-import UserHomeBodyContainer from "containers/UserHomeBodyContainer";
+import HeaderContainer from "components/layout/HeaderContainer";
+import MainContainer from "components/layout/MainContainer";
+import UserHomeBodyContainer from "components/home/UserHomeBodyContainer";
 
 export default class UserHomePage extends Component {
   render() {

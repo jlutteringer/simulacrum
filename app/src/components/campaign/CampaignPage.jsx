@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import CampaignBodyContainer from "containers/CampaignBodyContainer";
-import MainContainer from "containers/MainContainer";
+import CampaignBodyContainer from "components/campaign/CampaignBodyContainer";
+import MainContainer from "components/layout/MainContainer";
 import _ from 'lodash'
 
 export default class CampaignPage extends Component {

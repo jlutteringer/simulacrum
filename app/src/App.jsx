@@ -5,7 +5,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createMuiTheme, createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 import { lightBlue as primary, green as secondary, yellow as accent } from '@material-ui/core/colors';
-import PageRoutesContainer from "./containers/PageRoutesContainer";
+import PageRoutesContainer from "./components/PageRoutesContainer";
 import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers/index";
