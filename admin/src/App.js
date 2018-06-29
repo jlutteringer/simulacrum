@@ -6,13 +6,14 @@ import {authProvider,dataProvider} from "providers";
 import {CampaignEdit, CampaignList} from "pages/campaigns";
 import DashBoard from 'pages/dashboard'
 import UserIcon from '@material-ui/icons/Group';
+import CampaignIcon from '@material-ui/icons/Games';
 
 class App extends Component {
   render() {
     return (
       <Admin loginPage={LoginPage} dataProvider={dataProvider} authProvider={authProvider} dashboard={DashBoard}>
         <Resource name="users" list={UserList} edit={UserEdit} icon={UserIcon}/>
-        <Resource name="campaigns" list={CampaignList} edit={CampaignEdit}/>
+        <Resource name="campaigns" list={CampaignList} edit={CampaignEdit} icon={CampaignIcon}/>
       </Admin>
     );
   }
