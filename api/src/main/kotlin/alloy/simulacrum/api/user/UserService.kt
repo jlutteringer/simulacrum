@@ -15,7 +15,6 @@ import javax.sql.DataSource
 @Service
 class UserService(val dataSource: DataSource) : UserDetailsService {
 
-
     override fun loadUserByUsername(username: String?): UserDetails? {
         Database.connect(dataSource)
         return transaction {
@@ -26,10 +25,12 @@ class UserService(val dataSource: DataSource) : UserDetailsService {
         }
     }
 
+    /**
+     * TODO Implement caching
+     */
     fun loadAuthoritiesForUser(username: String): List<GrantedAuthority> {
         Database.connect(dataSource)
         return transaction {
-            logger.addLogger(StdOutSqlLogger)
             val roles = (Roles innerJoin Users)
                     .select{ Users.username.eq(username) }
                     .mapNotNull{ Role.wrapRow(it) }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {history} from 'App'
 
 export const TYPES = {
   LOAD_CAMPAIGN_START: 'LOAD_CAMPAIGN_START',
@@ -8,7 +9,9 @@ export const TYPES = {
   LOAD_CAMPAIGNS_SUCCESS: 'LOAD_CAMPAIGNS_SUCCESS',
   LOAD_CAMPAIGNS_FAILURE: 'LOAD_CAMPAIGNS_FAILURE',
   ADD_CAMPAIGN_SUCCESS: 'ADD_CAMPAIGN_SUCCESS',
-  ADD_CAMPAIGN_FAILURE: 'ADD_CAMPAIGN_FAILURE'
+  ADD_CAMPAIGN_FAILURE: 'ADD_CAMPAIGN_FAILURE',
+  CREATE_CAMPAIGN_SUCCESS: 'CREATE_CAMPAIGN_SUCCESS',
+  CREATE_CAMPAIGN_FAILURE: 'CREATE_CAMPAIGN_FAILURE'
 }
 
 export function loadCampaigns() {
@@ -39,9 +42,10 @@ export function createCampaign(campaign) {
   return (dispatch, getState) => {
     return axios.post(`/api/campaigns`, campaign)
     .then(response => {
-      dispatch(addCampaignSuccess(response.data))
+      dispatch(createCampaignSuccess(response.data))
+      history.push(`/campaigns/${response.data.id}/info`)
     }).catch((error) => {
-      dispatch(addCampaignFailure(error))
+      dispatch(createCampaignFailure(error))
     });
   }
 }
@@ -101,6 +105,21 @@ export function addCampaignFailure(error) {
   console.log(error)
   return {
     type: TYPES.ADD_CAMPAIGN_FAILURE,
+    error
+  }
+}
+
+export function createCampaignSuccess(campaign) {
+  return {
+    type: TYPES.CREATE_CAMPAIGN_SUCCESS,
+    campaign
+  }
+}
+
+export function createCampaignFailure(error) {
+  console.log(error)
+  return {
+    type: TYPES.CREATE_CAMPAIGN_FAILURE,
     error
   }
 }

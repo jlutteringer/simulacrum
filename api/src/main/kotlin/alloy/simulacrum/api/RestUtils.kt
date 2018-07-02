@@ -69,7 +69,7 @@ val RANGE_REGEX = """.([0-9]*),([0-9]*).""".toRegex()
 val SORT_REGEX = """..(\w*).,.(DESC|ASC)..""".toRegex()
 val FILTER_REGEX = """\{.(\w*).:\[?([^]]*)]?}""".toRegex()
 
-class Pageable {
+class Pageable(filter: String? = null, range: String? = null, sort: String? = null) {
     var filterField: String? = null
     var filterValues: List<String>? = null
     var offset: Int? = null
@@ -77,7 +77,7 @@ class Pageable {
     var sortField: String? = null
     var sortDirection: String? = null
 
-    constructor(filter: String?, range: String?, sort: String?) {
+    init {
         if(filter != null) {
             val match = FILTER_REGEX.matchEntire(filter)
             if(match != null) {
@@ -90,13 +90,11 @@ class Pageable {
                 }
             }
         }
-
         if(sort != null) {
             val (sortField, sortDirection) = SORT_REGEX.matchEntire(sort)!!.destructured
             this.sortField = sortField
             this.sortDirection = sortDirection
         }
-
         if(range != null) {
             val (firstIndex, lastIndex) = RANGE_REGEX.matchEntire(range)!!.destructured
             this.offset = firstIndex.toInt()

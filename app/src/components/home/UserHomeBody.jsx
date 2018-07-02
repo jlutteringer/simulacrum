@@ -40,8 +40,7 @@ const styles = (theme) => ({
 
 class UserHomeBody extends Component {
   static propTypes = {
-    campaigns: PropTypes.object,
-    createCampaign: PropTypes.func
+    campaigns: PropTypes.object
   }
 
   componentWillMount() {
@@ -49,15 +48,15 @@ class UserHomeBody extends Component {
   }
 
   renderCampaigns() {
-    const {campaigns, classes, createCampaign} = this.props
+    const {campaigns, classes} = this.props
 
     return (
         <div className={classes.root} elevation={4}>
           <div>
             <Typography variant="headline" component="h2" align={"center"}>
               Campaigns
-              <IconButton onClick={() => createCampaign({"name": "Test!!"})} color={"inherit"}>
-                <AddCircleOutlineIcon/>
+              <IconButton color={"inherit"}>
+                <Link to={"/campaigns/new"}><AddCircleOutlineIcon/></Link>
               </IconButton>
             </Typography>
           </div>

@@ -47,3 +47,4 @@ logging:
   level:
     root: INFO
     alloy.simulacrum.api: INFO
+#    org.springframework.web.socket.sockjs: DEBUG

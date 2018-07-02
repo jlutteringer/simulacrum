@@ -6,6 +6,7 @@ import LoginPage from "components/login/LoginPage";
 import UserHomePage from "components/home/UserHomePage";
 import CampaignPage from "components/campaign/CampaignPage";
 import CampaignInfoPage from "components/campaign/info/CampaignInfoPage";
+import CampaignCreationPage from "components/campaign/create/CampaignCreationPage";
 
 export default class PageRoutes extends Component {
   componentWillMount() {
@@ -22,18 +23,19 @@ export default class PageRoutes extends Component {
           return this.props.isLoggedIn ? <UserHomePage {...props} /> : <HomePage {...props} />
         }}/>
         <Route path={'/login'} component={LoginPage} {...this.props} />
-        <PrivateRoute exact path={'/campaigns/:campaignId'} component={CampaignPage} isAuthenticated={this.props.isLoggedIn}/>
-        <PrivateRoute exact path={'/campaigns/:campaignId/info'} component={CampaignInfoPage} isAuthenticated={this.props.isLoggedIn}/>
+        <PrivateRoute exact path={'/campaigns/new'} component={CampaignCreationPage} {...this.props}/>
+        <PrivateRoute exact path={'/campaigns/:campaignId'} component={CampaignPage} {...this.props}/>
+        <PrivateRoute exact path={'/campaigns/:campaignId/info'} component={CampaignInfoPage} {...this.props}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     )
   }
 }
 
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => (
     <Route {...rest}
         render={
-          props => isAuthenticated
+          props => isLoggedIn
               ? <Component {...props} />
               : <Redirect to={{
                 pathname: '/login',
