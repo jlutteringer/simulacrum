@@ -16,7 +16,7 @@ class GlobalRestControllerExceptionHandler: ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(Exception::class)
     fun unknownExpection(ex: Exception, req: HttpServletRequest, resp: HttpServletResponse): ResponseEntity<Any>? {
-        logger.error { ex }
+        logger.error ({ ex }, ex)
         if(resp.isCommitted) {
             return null
         }

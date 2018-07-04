@@ -29,7 +29,8 @@ dependencies {
   compile("org.springframework.cloud:spring-cloud-security:2.0.0.RC1")
   compile('com.fasterxml.jackson.module:jackson-module-kotlin')
   compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
-  compile 'org.jetbrains.exposed:exposed:0.10.2'
+  compile 'org.jetbrains.exposed:exposed:0.10.3'
+  compile 'org.jetbrains.exposed:spring-transaction:0.10.3'
   compile 'mysql:mysql-connector-java'
   compile 'io.github.microutils:kotlin-logging:1.5.4'
   compile 'org.apache.commons:commons-lang3:3.7'

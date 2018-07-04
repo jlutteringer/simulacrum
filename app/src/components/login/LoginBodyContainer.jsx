@@ -1,13 +1,13 @@
-import {connect} from "react-redux";
-import LoginBody from "components/login/LoginBody";
-import * as UserActions from "actions/UserActions";
+import {connect} from 'react-redux';
+import LoginBody from 'components/login/LoginBody';
+import * as UserActions from 'actions/UserActions';
 
 const mapStateToProps = (state, ownProps) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
-    isLoading: state.user.isLoading
-  }
-}
+    isLoading: state.user.isLoading,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -15,10 +15,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(UserActions.login(googleUser));
     },
     loginFailure: (error) => {
-      console.log("User decided not to login")
-      console.log(error)
-    }
-  }
-}
+
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginBody);

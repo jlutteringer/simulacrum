@@ -6,14 +6,12 @@ import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
 import org.jetbrains.exposed.dao.LongIdTable
-import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 
 object Campaigns: LongIdTable() {
     val creator = reference("creator", Users)
     val archived = bool("archived").default(false)
     val name = varchar("name", 100)
-    val lastAccessed = datetime("last_accessed")
 }
 
 class Campaign(id: EntityID<Long>) : LongEntity(id) {
@@ -22,13 +20,7 @@ class Campaign(id: EntityID<Long>) : LongEntity(id) {
     var creator by User referencedOn Campaigns.creator
     var name by Campaigns.name
     var archived by Campaigns.archived
-    var lastAccessDate by Campaigns.lastAccessed
     var players by User via CampaignPlayers
-}
-
-object CampaignPlayers : Table() {
-    val campaign = reference("campaign_id", Campaigns).primaryKey(0)
-    val player = reference("player_id", Users).primaryKey(1)
 }
 
 data class CampaignSummaryDTO(val name: String) {
@@ -37,7 +29,6 @@ data class CampaignSummaryDTO(val name: String) {
 
     constructor(campaign: Campaign): this(campaign.name) {
         id = campaign.id.value
-        lastAccessed = campaign.lastAccessDate
     }
 }
 
@@ -53,7 +44,6 @@ data class CampaignDTO(val name: String) {
     constructor(campaign: Campaign): this(campaign.name) {
         this.id = campaign.id.value
         this.creator = campaign.creator.id.value
-        this.lastAccessed = campaign.lastAccessDate
         this.archived = campaign.archived
         this.playerIds = campaign.players.map { it.id.value }
 
@@ -63,6 +53,10 @@ data class CampaignDTO(val name: String) {
         // TODO pull scenes from DB
         sceneConfigs = listOf(SceneConfig(0, 20, 15, "SQUARE"))
 
+    }
+
+    constructor(campaign: Campaign, campaignPlayer: CampaignPlayer) : this(campaign) {
+        this.lastAccessed = campaignPlayer.lastAccessDate
     }
 }
 

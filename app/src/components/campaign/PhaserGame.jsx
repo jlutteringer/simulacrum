@@ -1,25 +1,23 @@
-import React, {Component} from 'react'
-import GameActions from "actions/GameActions";
+import React, {Component} from 'react';
+import GameActions from 'actions/GameActions';
 import ClientActions from 'actions/ClientActions';
-import GameMediator from 'actions/GameMediatorActions'
+import GameMediator from 'actions/GameMediatorActions';
 
 class PhaserGame extends Component {
   componentDidMount() {
-    console.log(this.props.campaign)
-
     this.gameMediator = new GameMediator();
 
     // Initialize
     this.game = new GameActions(this.gameMediator, this.props.campaign);
-    this.client = new ClientActions(this.gameMediator, this.props.campaign, this.props.token, this.props.userId)
+    this.client = new ClientActions(this.gameMediator, this.props.campaign, this.props.token, this.props.userId);
 
-    this.game.start()
-    this.client.connect()
+    this.game.start();
+    this.client.connect();
   }
 
   componentWillUnmount() {
-    this.client.disconnect()
-    this.game.stop()
+    this.client.disconnect();
+    this.game.stop();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -34,4 +32,4 @@ class PhaserGame extends Component {
   }
 }
 
-export default PhaserGame
+export default PhaserGame;

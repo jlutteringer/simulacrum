@@ -3,6 +3,7 @@ package alloy.simulacrum.api.game
 import alloy.simulacrum.api.Pageable
 import alloy.simulacrum.api.RestUtils
 import alloy.simulacrum.api.user.User
+import alloy.simulacrum.api.user.notification.NotificationService
 import mu.KLogging
 import org.springframework.messaging.handler.annotation.DestinationVariable
 import org.springframework.messaging.handler.annotation.MessageMapping
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController()
 @RequestMapping("/api/campaigns")
-class CampaignController(val campaignService: CampaignService) {
+class CampaignController(val campaignService: CampaignService, val notifactionService: NotificationService) {
     companion object : KLogging()
 
     @GetMapping("/currentUser")
@@ -23,10 +24,16 @@ class CampaignController(val campaignService: CampaignService) {
         return campaignService.findAllActiveCampaigns(user)
     }
 
-    @PostAuthorize("hasRole('ROLE_ADMIN') or (@campaignService.userCanAccess(#user, returnedObject))")
+    @PostAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{campaignId}")
     fun getGame(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
-        return campaignService.findCampaign(campaignId)
+        return campaignService.getCampaign(campaignId)
+    }
+
+    @PostAuthorize("(@campaignService.userCanAccess(#user, returnedObject))")
+    @GetMapping("/{campaignId}/load")
+    fun findConfig(@AuthenticationPrincipal user: User, @PathVariable campaignId: Long): CampaignDTO {
+        return campaignService.findConfig(user.id.value, campaignId)
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -46,6 +53,24 @@ class CampaignController(val campaignService: CampaignService) {
     @PostMapping()
     fun createCampaign(@AuthenticationPrincipal user: User, @RequestBody campaignDTO: CampaignDTO): CampaignDTO {
         return campaignService.create(user, campaignDTO)
+    }
+
+    data class CampaignInviteDTO(val username: String, val campaignId: Long)
+
+    @PostMapping("/invite")
+    fun invitePlayer(@AuthenticationPrincipal user: User, @RequestBody campaignInviteDTO: CampaignInviteDTO) {
+        val notificationDTO = campaignService.invitePlayer(user, campaignInviteDTO)
+        notifactionService.sendPlayerInvite(notificationDTO)
+    }
+
+    @PostMapping("/invite/{token}/accept")
+    fun acceptInvite(@AuthenticationPrincipal user: User, @PathVariable token: String): CampaignSummaryDTO {
+        return campaignService.acceptInvite(user, token)
+    }
+
+    @PostMapping("/invite/{token}/decline")
+    fun declineInvite(@AuthenticationPrincipal user: User, @PathVariable token: String) {
+        return campaignService.declineInvite(user, token)
     }
 
     @PutMapping("/{campaignId}")

@@ -1,18 +1,17 @@
 export default class ClientActions {
-
   setGame(game) {
-    this.game = game
+    this.game = game;
   }
 
   setClient(client) {
-    this.client = client
+    this.client = client;
   }
 
   addNewPlayer(player) {
-    this.game.addNewPlayer(player)
+    this.game.addNewPlayer(player);
   }
 
-  localLongPress(x,y) {
-    this.client.localLongPress(x,y)
+  localLongPress(x, y) {
+    this.client.localLongPress(x, y);
   }
 }

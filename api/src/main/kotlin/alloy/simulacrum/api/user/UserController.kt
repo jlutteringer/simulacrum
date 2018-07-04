@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse
 
 @RestController()
 @RequestMapping("/api/users")
-class UserController(private val userService: UserService) {
+class UserController(val userService: UserService) {
 
     @GetMapping("/currentUser")
     fun getCurrentUser(@AuthenticationPrincipal user: User): UserDTO {

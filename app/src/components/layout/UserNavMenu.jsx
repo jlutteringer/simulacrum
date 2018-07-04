@@ -1,45 +1,45 @@
-import React, { Component } from 'react';
-import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
-import Menu from "@material-ui/core/es/Menu/Menu";
-import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+import Menu from '@material-ui/core/es/Menu/Menu';
+import MenuItem from '@material-ui/core/es/MenuItem/MenuItem';
+import IconButton from '@material-ui/core/es/IconButton/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
-import {withStyles} from "@material-ui/core/styles/index";
+import ListItemText from '@material-ui/core/es/ListItemText/ListItemText';
+import {withStyles} from '@material-ui/core/styles/index';
 
 const styles = (theme) => ({
   root: {
 
-  }
-})
+  },
+});
 
 class UserNavMenu extends Component {
   static propTypes = {
-    handleLogoutClick: PropTypes.func.isRequired
+    handleLogoutClick: PropTypes.func.isRequired,
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       anchorEl: null,
     };
 
-    this.handleClick = this.handleClick.bind(this)
-    this.handleClose = this.handleClose.bind(this)
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+  handleClick(event) {
+    this.setState({anchorEl: event.currentTarget});
+  }
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+  handleClose() {
+    this.setState({anchorEl: null});
+  }
 
   render() {
-    const { anchorEl} = this.state;
-    const { handleLogoutClick, classes } = this.props;
+    const {anchorEl} = this.state;
+    const {handleLogoutClick, classes} = this.props;
 
     return (
         <div className={classes.userNavMenu}>
@@ -47,7 +47,7 @@ class UserNavMenu extends Component {
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}
-              color={"inherit"}>
+              color={'inherit'}>
             <AccountCircleIcon />
           </IconButton>
           <Menu id="simple-menu"
@@ -57,7 +57,7 @@ class UserNavMenu extends Component {
           >
             <MenuItem><Link to={'/account'}>My account</Link></MenuItem>
             <MenuItem onClick={handleLogoutClick}>
-              <ListItemText primary={"Logout"}  />
+              <ListItemText primary={'Logout'} />
             </MenuItem>
           </Menu>
         </div>

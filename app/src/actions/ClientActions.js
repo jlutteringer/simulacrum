@@ -1,28 +1,27 @@
-import SockJS from 'sockjs-client'
-import Stomp from 'stompjs'
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 export default class ClientActions {
-
   constructor(mediator, config, token, userId) {
-    this.config = config
-    this.token = token
-    this.campaignId = config.id
-    this.userId = userId
-    this.mediator = mediator
-    this.mediator.setClient(this)
+    this.config = config;
+    this.token = token;
+    this.campaignId = config.id;
+    this.userId = userId;
+    this.mediator = mediator;
+    this.mediator.setClient(this);
   }
 
   connect() {
-    const self = this
+    const self = this;
 
     this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
     this.stompClient = Stomp.over(this.socket);
-    this.stompClient.connect({}, function (frame) {
-      self.isConnected = true
-      self.stompClient.subscribe(`/api/ws/topic/campaigns/${self.campaignId}`, function (message) {
-        const responseBody = JSON.parse(message.body)
-        if(responseBody.userId !== self.userId) {
-          self.processEvent(responseBody)
+    this.stompClient.connect({}, function(frame) {
+      self.isConnected = true;
+      self.stompClient.subscribe(`/api/ws/topic/campaigns/${self.campaignId}`, function(message) {
+        const responseBody = JSON.parse(message.body);
+        if (responseBody.userId !== self.userId) {
+          self.processEvent(responseBody);
         }
       });
     });
@@ -31,34 +30,34 @@ export default class ClientActions {
   }
 
   disconnect() {
-    if(this.isConnected) {
-      this.stompClient.disconnect()
+    if (this.isConnected) {
+      this.stompClient.disconnect();
     }
   }
 
   // Local Events
   sendClientJoin() {
     this.send({
-      'type':'join'
-    })
+      'type': 'join',
+    });
   }
 
   localLongPress(x, y) {
     this.send({
-      'type':'click',
+      'type': 'click',
       x,
-      y
-    })
+      y,
+    });
   }
 
   send(action) {
-    if(this.isConnected) {
-      this.stompClient.send(`/api/ws/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action))
+    if (this.isConnected) {
+      this.stompClient.send(`/api/ws/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action));
     }
   }
 
   // Server events
   processEvent(event) {
-    console.log(event)
+
   }
 }

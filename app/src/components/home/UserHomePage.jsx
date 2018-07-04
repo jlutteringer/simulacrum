@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
-import HeaderContainer from "components/layout/HeaderContainer";
-import MainContainer from "components/layout/MainContainer";
-import UserHomeBodyContainer from "components/home/UserHomeBodyContainer";
-import Footer from "components/layout/Footer";
+import UserHomeBodyContainer from 'components/home/UserHomeBodyContainer';
+import TemplatePage from 'components/layout/TemplatePage';
 
 export default class UserHomePage extends Component {
   render() {
     return (
-        <React.Fragment>
-          <HeaderContainer />
-          <MainContainer>
+        <TemplatePage>
             <UserHomeBodyContainer />
-          </MainContainer>
-          <Footer>
-
-          </Footer>
-        </React.Fragment>
-    )
+        </TemplatePage>
+    );
   }
 }

@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import HeaderContainer from 'components/layout/HeaderContainer';
-import LoginBodyContainer from 'components/login/LoginBodyContainer';
 import MainContainer from 'components/layout/MainContainer';
+import Footer from 'components/layout/Footer';
 
-export default class LoginPage extends Component {
+export default class TemplatePage extends Component {
   render() {
     return (
-        <div>
-          <HeaderContainer/>
+        <React.Fragment>
+          <HeaderContainer />
           <MainContainer>
-            <LoginBodyContainer {...this.props}/>
+            { this.props.children }
           </MainContainer>
-        </div>
+          <Footer/>
+        </React.Fragment>
     );
   }
 }

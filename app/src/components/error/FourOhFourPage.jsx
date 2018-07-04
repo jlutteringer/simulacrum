@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
-import HeaderContainer from "components/layout/HeaderContainer";
-import MainContainer from "components/layout/MainContainer";
+import TemplatePage from 'components/layout/TemplatePage';
 
 export default class FourOhFourPage extends Component {
   render() {
-    console.log(this.props)
     return (
-      <div>
-        <HeaderContainer />
-        <MainContainer>
+        <TemplatePage>
           <p>Error!!</p>
-
-        </MainContainer>
-      </div>
-    )
+        </TemplatePage>
+    );
   }
 }

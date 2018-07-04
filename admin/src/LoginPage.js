@@ -46,8 +46,7 @@ class LoginPage extends Component {
     this.props.userLogin(googleUser);
   }
   loginFailure(error) {
-    console.log("User decided not to login")
-    console.log(error)
+
   }
 
   render() {

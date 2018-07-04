@@ -1,75 +1,73 @@
-import React, {Component} from 'react'
-import PropTypes from "prop-types";
-import {GoogleLogin} from "react-google-login";
-import { withStyles } from '@material-ui/core/styles';
-import {Redirect} from "react-router-dom";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
-import Card from "@material-ui/core/es/Card/Card";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {GoogleLogin} from 'react-google-login';
+import {withStyles} from '@material-ui/core/styles';
+import {Redirect} from 'react-router-dom';
+import CardContent from '@material-ui/core/es/CardContent/CardContent';
+import Card from '@material-ui/core/es/Card/Card';
+import Typography from '@material-ui/core/es/Typography/Typography';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
 
   },
   row: {
   },
   card: {
     display: 'flex',
-    minWidth: '25%'
+    minWidth: '25%',
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   appLogo: {
     height: 75,
-    display: 'block'
+    display: 'block',
   },
 });
 
 class LoginBody extends Component {
   static propTypes = {
-    loginSuccess : PropTypes.func.isRequired,
-    loginFailure : PropTypes.func.isRequired
+    loginSuccess: PropTypes.func.isRequired,
+    loginFailure: PropTypes.func.isRequired,
   };
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
-  static getDerivedStateFromProps(props, current_state) {
-    if (!current_state || !current_state.location || current_state.location.state !== props.location.state) {
+  static getDerivedStateFromProps(props, currentState) {
+    if (!currentState || !currentState.location || currentState.location.state !== props.location.state) {
       return {
         location: {
-          state: props.location.state
-        }
-      }
+          state: props.location.state,
+        },
+      };
     }
-    return null
+    return null;
   }
 
   render() {
-    const {classes, isLoggedIn, isLoading, loginSuccess, loginFailure} = this.props
-    console.log(this.props)
-    console.log(this.state)
+    const {classes, isLoggedIn, isLoading, loginSuccess, loginFailure} = this.props;
 
-    if(isLoading) {
+    if (isLoading) {
       return null;
     }
-    if(isLoggedIn) {
-      const { from } = this.state.location.state || { from: { pathname: '/' } }
-      return <Redirect to={from} />
+    if (isLoggedIn) {
+      const {from} = this.state.location.state || {from: {pathname: '/'}};
+      return <Redirect to={from} />;
     }
 
-    /*TODO Style the Google Login button according to documentation*/
+    /* TODO Style the Google Login button according to documentation*/
     return (
         <div className={classes.root}>
           <div className={classes.row}>
@@ -94,4 +92,4 @@ class LoginBody extends Component {
   }
 }
 
-export default withStyles(styles)(LoginBody)
+export default withStyles(styles)(LoginBody);
