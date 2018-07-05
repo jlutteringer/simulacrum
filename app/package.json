@@ -72,7 +72,10 @@
       "babel/semi": 1,
       "babel/no-unused-expressions": 1,
       "no-invalid-this": 0,
-      "quotes": 0
+      "quotes": 0,
+      "no-restricted-imports": ["error", {
+        "patterns": ["@material-ui/core/es/*"]
+      }]
     },
     "plugins": [
       "babel",

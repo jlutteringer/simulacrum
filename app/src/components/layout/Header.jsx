@@ -4,7 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import {withStyles} from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/es/Button/Button";
+import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import UserNavMenu from "components/layout/UserNavMenu";
 import UserNotificationMenu from "components/layout/UserNotificationMenu";

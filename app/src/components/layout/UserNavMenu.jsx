@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import Menu from "@material-ui/core/es/Menu/Menu";
-import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
+import ListItemText from "@material-ui/core/ListItemText";
 import {withStyles} from "@material-ui/core/styles/index";
 
 const styles = (theme) => ({

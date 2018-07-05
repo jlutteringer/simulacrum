@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {GoogleLogin} from "react-google-login";
 import {withStyles} from "@material-ui/core/styles";
 import {Redirect} from "react-router-dom";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
-import Card from "@material-ui/core/es/Card/Card";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
   root: {

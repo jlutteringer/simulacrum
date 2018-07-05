@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     campaign: currentCampaign,
     isLoading: state.campaigns.isLoading || currentCampaign === null,
+    isCreator: currentCampaign != null && currentCampaign.creator === state.user.info.id,
   };
 };
 

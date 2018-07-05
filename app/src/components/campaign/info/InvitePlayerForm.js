@@ -1,14 +1,14 @@
+import Button from "@material-ui/core/Button";
 import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import _ from "lodash";
 import {Redirect} from "react-router-dom";
-import CardActions from "@material-ui/core/es/CardActions/CardActions";
+import CardActions from "@material-ui/core/CardActions";
 import {Field, reduxForm} from "redux-form";
-import Typography from "@material-ui/core/es/Typography/Typography";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
-import Card from "@material-ui/core/es/Card/Card";
-import Button from "@material-ui/core/es/Button/Button";
+import Typography from "@material-ui/core/Typography";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
 import {FormTextField} from "components/util/FormTextField";
 
 const styles = (themes) => ({

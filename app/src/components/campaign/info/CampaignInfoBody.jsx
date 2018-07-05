@@ -56,7 +56,7 @@ class CampaignInfoBody extends React.Component {
           }
           {
             !isCreator &&
-            this.renderCreatorView()
+            this.renderPlayerView()
           }
         </div>
     );

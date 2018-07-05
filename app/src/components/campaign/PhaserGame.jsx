@@ -23,9 +23,9 @@ class PhaserGame extends Component {
   }
 
   componentWillUnmount() {
-    this.client.disconnect();
-    this.game.stop();
-  }
+      this.client.disconnect();
+      this.game.stop();
+    }
 
   shouldComponentUpdate(nextProps, nextState) {
     return false;

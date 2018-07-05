@@ -1,16 +1,16 @@
-import Phaser from 'components/campaign/Phaser';
+import Phaser from "components/campaign/Phaser";
 
 export default class GameMediator {
   constructor(mediator, config) {
-    this.game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-container');
+    this.game = new Phaser.Game(800, 600, Phaser.CANVAS, "phaser-container");
     this.config = config;
     this.mediator = mediator;
     this.mediator.setGame(this);
   }
 
   start() {
-    this.game.state.add('Game', this);
-    this.game.state.start('Game');
+    this.game.state.add("Game", this);
+    this.game.state.start("Game");
   }
 
   init() {
@@ -38,7 +38,7 @@ export default class GameMediator {
     let borderOffset = 50;
     let squareLength = 50;
 
-    this.game.stage.backgroundColor = '#77c6ff';
+    this.game.stage.backgroundColor = "#77c6ff";
     this.game.world.setBounds(0, 0,
         borderOffset * 2 + squareLength * currentScene.width,
         borderOffset * 2 + squareLength * currentScene.height);

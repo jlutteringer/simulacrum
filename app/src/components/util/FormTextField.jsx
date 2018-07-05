@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextField from "@material-ui/core/es/TextField/TextField";
+import TextField from "@material-ui/core/TextField";
 
 export const FormTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     <TextField placeholder={label}

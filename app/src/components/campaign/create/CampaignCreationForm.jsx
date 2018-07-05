@@ -1,11 +1,11 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
-import Button from "@material-ui/core/es/Button/Button";
-import CardActions from "@material-ui/core/es/CardActions/CardActions";
-import Card from "@material-ui/core/es/Card/Card";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import Button from "@material-ui/core/Button";
+import CardActions from "@material-ui/core/CardActions";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import {withStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Typography from "@material-ui/core/Typography";
 import {FormTextField} from "components/util/FormTextField";
 import PropTypes from "prop-types";
 

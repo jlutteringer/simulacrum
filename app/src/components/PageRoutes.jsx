@@ -5,9 +5,10 @@ import FourOhFourPage from "components/error/FourOhFourPage";
 import HomePage from "components/home/HomePage";
 import LoginPage from "components/login/LoginPage";
 import UserHomePage from "components/home/UserHomePage";
-import CampaignPage from "components/campaign/CampaignPage";
 import CampaignInfoPage from "components/campaign/info/CampaignInfoPage";
 import CampaignCreationPage from "components/campaign/create/CampaignCreationPage";
+
+const AsyncCampaignPage = asyncComponent(() => import("components/campaign/CampaignPage"));
 
 export default class PageRoutes extends Component {
   static propTypes = {
@@ -30,16 +31,16 @@ export default class PageRoutes extends Component {
           return this.props.isLoggedIn ? <UserHomePage {...props} /> : <HomePage {...props} />;
         }}/>
         <Route path={"/login"} component={LoginPage} {...this.props} />
-        <PrivateRoute exact path={"/campaigns/new"} component={CampaignCreationPage} {...this.props}/>
-        <PrivateRoute exact path={"/campaigns/:campaignId"} component={CampaignPage} {...this.props}/>
-        <PrivateRoute exact path={"/campaigns/:campaignId/info"} component={CampaignInfoPage} {...this.props}/>
+        <AuthenticatedRoute exact path={"/campaigns/new"} component={CampaignCreationPage} {...this.props}/>
+        <AuthenticatedRoute exact path={"/campaigns/:campaignId"} component={AsyncCampaignPage} {...this.props}/>
+        <AuthenticatedRoute exact path={"/campaigns/:campaignId/info"} component={CampaignInfoPage} {...this.props}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     );
   }
 }
 
-const PrivateRoute = ({component: Component, isLoggedIn, ...rest}) => (
+const AuthenticatedRoute = ({component: Component, isLoggedIn, ...rest}) => (
     <Route {...rest}
         render={
           (props) => isLoggedIn
@@ -52,8 +53,36 @@ const PrivateRoute = ({component: Component, isLoggedIn, ...rest}) => (
     />
 );
 
-PrivateRoute.propTypes = {
+AuthenticatedRoute.propTypes = {
   component: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
+
+function asyncComponent(importComponent) {
+  class AsyncComponent extends Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        component: null,
+      };
+    }
+
+    async componentDidMount() {
+      const {default: component} = await importComponent();
+
+      this.setState({
+        component: component,
+      });
+    }
+
+    render() {
+      const C = this.state.component;
+
+      return C ? <C {...this.props} /> : null;
+    }
+  }
+
+  return AsyncComponent;
+}

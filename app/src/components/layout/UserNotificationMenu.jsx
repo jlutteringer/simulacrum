@@ -1,17 +1,17 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import Menu from "@material-ui/core/es/Menu/Menu";
-import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
-import Badge from "@material-ui/core/es/Badge/Badge";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import ListItemText from "@material-ui/core/ListItemText";
+import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationIcon from "@material-ui/icons/Notifications";
 import CampaignIcon from "@material-ui/icons/Games";
-import Divider from "@material-ui/core/es/Divider/Divider";
-import ListItemIcon from "@material-ui/core/es/ListItemIcon/ListItemIcon";
+import Divider from "@material-ui/core/Divider";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InvitationNotificationDialogContainer from "components/layout/InvitationNotificationDialogContainer";
-import MenuList from "@material-ui/core/es/MenuList/MenuList";
+import MenuList from "@material-ui/core/MenuList";
 import _ from "lodash";
 
 class UserNotificationMenu extends Component {
