@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import * as CampaignActions from 'actions/CampaignActions';
-import CampaignInfoBody from 'components/campaign/info/CampaignInfoBody';
+import {connect} from "react-redux";
+import * as CampaignActions from "actions/CampaignActions";
+import CampaignInfoBody from "components/campaign/info/CampaignInfoBody";
 
 const mapStateToProps = (state, ownProps) => {
   const currentCampaign = state.campaigns.current !== null &&
@@ -8,9 +8,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     campaign: currentCampaign,
     isLoading: state.campaigns.isLoading || currentCampaign === null,
-    initialValues: {
-      campaignId: currentCampaign != null ? currentCampaign.id : null,
-    },
   };
 };
 

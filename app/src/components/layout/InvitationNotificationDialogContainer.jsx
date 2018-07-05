@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import * as CampaignActions from 'actions/CampaignActions';
-import InvitationNotificationDialog from 'components/layout/InvitationNotificationDialog';
+import {connect} from "react-redux";
+import * as CampaignActions from "actions/CampaignActions";
+import InvitationNotificationDialog from "components/layout/InvitationNotificationDialog";
 
 const mapStateToProps = (state, ownProps) => {
   return {

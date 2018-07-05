@@ -1,7 +1,7 @@
-import {connect} from 'react-redux';
-import Header from 'components/layout/Header';
-import * as UserActions from 'actions/UserActions';
-import * as NotificationActions from 'actions/NotificationActions';
+import {connect} from "react-redux";
+import Header from "components/layout/Header";
+import * as UserActions from "actions/UserActions";
+import * as NotificationActions from "actions/NotificationActions";
 
 const mapStateToProps = (state, ownProps) => {
   return {

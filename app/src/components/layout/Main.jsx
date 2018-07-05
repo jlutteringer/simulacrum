@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {withStyles} from '@material-ui/core/styles';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {withStyles} from "@material-ui/core/styles";
 
 const styles = (theme) => ({
   main: {
@@ -11,8 +12,9 @@ const styles = (theme) => ({
 
 class Main extends Component {
   static propTypes = {
-
-  }
+    classes: PropTypes.object.isRequired,
+    children: PropTypes.node,
+  };
 
   render() {
     const {classes} = this.props;

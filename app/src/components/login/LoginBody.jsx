@@ -1,49 +1,48 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {GoogleLogin} from 'react-google-login';
-import {withStyles} from '@material-ui/core/styles';
-import {Redirect} from 'react-router-dom';
-import CardContent from '@material-ui/core/es/CardContent/CardContent';
-import Card from '@material-ui/core/es/Card/Card';
-import Typography from '@material-ui/core/es/Typography/Typography';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {GoogleLogin} from "react-google-login";
+import {withStyles} from "@material-ui/core/styles";
+import {Redirect} from "react-router-dom";
+import CardContent from "@material-ui/core/es/CardContent/CardContent";
+import Card from "@material-ui/core/es/Card/Card";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 const styles = (theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
 
   },
   row: {
   },
   card: {
-    display: 'flex',
-    minWidth: '25%',
+    display: "flex",
+    minWidth: "25%",
   },
   content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
   appLogo: {
     height: 75,
-    display: 'block',
+    display: "block",
   },
 });
 
 class LoginBody extends Component {
   static propTypes = {
+    isLoggedIn: false,
+    isLoading: true,
     loginSuccess: PropTypes.func.isRequired,
     loginFailure: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
+  state = {};
 
   static getDerivedStateFromProps(props, currentState) {
     if (!currentState || !currentState.location || currentState.location.state !== props.location.state) {
@@ -63,7 +62,7 @@ class LoginBody extends Component {
       return null;
     }
     if (isLoggedIn) {
-      const {from} = this.state.location.state || {from: {pathname: '/'}};
+      const {from} = this.state.location.state || {from: {pathname: "/"}};
       return <Redirect to={from} />;
     }
 
@@ -74,7 +73,7 @@ class LoginBody extends Component {
             <Card className={classes.card}>
               <CardContent className={classes.content}>
                 <div className={classes.row}>
-                  <img src={'/logo.png'} className={classes.appLogo} alt="logo"/>
+                  <img src={"/logo.png"} className={classes.appLogo} alt="logo"/>
                 </div>
                 <div className={classes.row}>
                   <Typography variant="headline">Login with your Google account</Typography>

@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import LoginBody from 'components/login/LoginBody';
-import * as UserActions from 'actions/UserActions';
+import {connect} from "react-redux";
+import LoginBody from "components/login/LoginBody";
+import * as UserActions from "actions/UserActions";
 
 const mapStateToProps = (state, ownProps) => {
   return {

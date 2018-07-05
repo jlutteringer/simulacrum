@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
-import CampaignBody from 'components/campaign/CampaignBody';
-import * as CampaignActions from 'actions/CampaignActions';
+import {connect} from "react-redux";
+import CampaignBody from "components/campaign/CampaignBody";
+import * as CampaignActions from "actions/CampaignActions";
 
 const mapStateToProps = (state, ownProps) => {
   return {

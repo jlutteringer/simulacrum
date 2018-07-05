@@ -1,4 +1,4 @@
-import {TYPES} from 'actions/UserActions';
+import {TYPES} from "actions/UserActions";
 
 const INITIAL_STATE = {
   isLoggedIn: false,

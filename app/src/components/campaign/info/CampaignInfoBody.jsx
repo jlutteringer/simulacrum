@@ -1,101 +1,66 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import _ from 'lodash';
-import {Redirect} from 'react-router-dom';
-import CardActions from '@material-ui/core/es/CardActions/CardActions';
-import {Field, reduxForm} from 'redux-form';
-import Typography from '@material-ui/core/es/Typography/Typography';
-import CardContent from '@material-ui/core/es/CardContent/CardContent';
-import Card from '@material-ui/core/es/Card/Card';
-import Button from '@material-ui/core/es/Button/Button';
-import TextField from '@material-ui/core/es/TextField/TextField';
+import React from "react";
+import PropTypes from "prop-types";
+import {withStyles} from "@material-ui/core/styles";
+import _ from "lodash";
+import {Redirect} from "react-router-dom";
+import InvitePlayerForm from "components/campaign/info/InvitePlayerForm";
 
 const styles = (themes) => ({
   campaignInfoContainer: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   },
 });
 
-const validate = (values) => {
-  const errors = {};
-  const requiredFields = ['name'];
-  requiredFields.forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'Required';
-    }
-  });
-  return errors;
-};
-
-
-const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
-    <TextField placeholder={label}
-               error={touched && error}
-               helperText={touched && error}
-               {...input}
-               {...custom}
-    />
-);
-
-const email = (value) =>
-    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
-        'Invalid email address' : undefined;
-
 class CampaignInfoBody extends React.Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     campaignId: PropTypes.number.isRequired,
     loadCampaign: PropTypes.func.isRequired,
     campaign: PropTypes.object,
+    isCreator: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
     if (_.isEmpty(this.props.campaign)) {
       const campaignId = _.toNumber(this.props.campaignId);
       this.props.loadCampaign(campaignId);
-      this.props.initialize(this.props.campaignId);
     }
   }
 
+  renderCreatorView() {
+    return <InvitePlayerForm {...this.props} />;
+  }
+
+  renderPlayerView() {
+    return null;
+  }
+
   render() {
-    const {handleSubmit, pristine, submitting, classes, isLoading, campaign, invitePlayer} = this.props;
+    const {isCreator, classes, isLoading, campaign} = this.props;
 
     if (isLoading) {
       return null;
     }
 
     if (_.isEmpty(campaign)) {
-      return <Redirect to={'/'}/>;
+      return <Redirect to={"/"}/>;
     }
 
     return (
         <div className={classes.campaignInfoContainer}>
-          <form onSubmit={handleSubmit(invitePlayer)}>
-            <Card className={classes.campaignForm}>
-              <CardContent>
-                <Typography variant="headline" color={'inherit'} gutterBottom className={classes.campaignFormTitle}>
-                  Invite Your Adventurers
-                </Typography>
-                <div>
-                  <Field name="email" type="email"
-                         component={renderTextField} label="Email"
-                         validate={email}
-                  />
-                </div>
-              </CardContent>
-              <CardActions>
-                <Button type="submit" disabled={pristine || submitting} color={'inherit'}>Invite Player</Button>
-              </CardActions>
-            </Card>
-          </form>
+          {
+            isCreator &&
+            this.renderCreatorView()
+          }
+          {
+            !isCreator &&
+            this.renderCreatorView()
+          }
         </div>
     );
   }
 }
 
-export default withStyles(styles)(reduxForm({
-  form: 'CampaignInfoForm',
-  enableReinitialize: true,
-  validate,
-})(CampaignInfoBody));
+export default withStyles(styles)(CampaignInfoBody);

@@ -1,14 +1,21 @@
-import React, {Component} from 'react';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import FourOhFourPage from 'components/error/FourOhFourPage';
-import HomePage from 'components/home/HomePage';
-import LoginPage from 'components/login/LoginPage';
-import UserHomePage from 'components/home/UserHomePage';
-import CampaignPage from 'components/campaign/CampaignPage';
-import CampaignInfoPage from 'components/campaign/info/CampaignInfoPage';
-import CampaignCreationPage from 'components/campaign/create/CampaignCreationPage';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {Redirect, Route, Switch} from "react-router-dom";
+import FourOhFourPage from "components/error/FourOhFourPage";
+import HomePage from "components/home/HomePage";
+import LoginPage from "components/login/LoginPage";
+import UserHomePage from "components/home/UserHomePage";
+import CampaignPage from "components/campaign/CampaignPage";
+import CampaignInfoPage from "components/campaign/info/CampaignInfoPage";
+import CampaignCreationPage from "components/campaign/create/CampaignCreationPage";
 
 export default class PageRoutes extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    loadUserFromToken: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     this.props.loadUserFromToken();
   }
@@ -19,13 +26,13 @@ export default class PageRoutes extends Component {
     }
     return (
       <Switch>
-        <Route exact path={'/'} render={(props) => {
+        <Route exact path={"/"} render={(props) => {
           return this.props.isLoggedIn ? <UserHomePage {...props} /> : <HomePage {...props} />;
         }}/>
-        <Route path={'/login'} component={LoginPage} {...this.props} />
-        <PrivateRoute exact path={'/campaigns/new'} component={CampaignCreationPage} {...this.props}/>
-        <PrivateRoute exact path={'/campaigns/:campaignId'} component={CampaignPage} {...this.props}/>
-        <PrivateRoute exact path={'/campaigns/:campaignId/info'} component={CampaignInfoPage} {...this.props}/>
+        <Route path={"/login"} component={LoginPage} {...this.props} />
+        <PrivateRoute exact path={"/campaigns/new"} component={CampaignCreationPage} {...this.props}/>
+        <PrivateRoute exact path={"/campaigns/:campaignId"} component={CampaignPage} {...this.props}/>
+        <PrivateRoute exact path={"/campaigns/:campaignId/info"} component={CampaignInfoPage} {...this.props}/>
         <Route component={FourOhFourPage}/>
       </Switch>
     );
@@ -38,9 +45,15 @@ const PrivateRoute = ({component: Component, isLoggedIn, ...rest}) => (
           (props) => isLoggedIn
               ? <Component {...props} />
               : <Redirect to={{
-                pathname: '/login',
+                pathname: "/login",
                 state: {from: props.location},
               }}/>
         }
     />
 );
+
+PrivateRoute.propTypes = {
+  component: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+};

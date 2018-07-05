@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import _ from 'lodash';
-import PhaserGame from './PhaserGame';
-import {Redirect} from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import {withStyles} from "@material-ui/core/styles";
+import _ from "lodash";
+import PhaserGame from "components/campaign/PhaserGame";
+import {Redirect} from "react-router-dom";
 
 const styles = (themes) => ({
   root: {
@@ -13,6 +13,8 @@ const styles = (themes) => ({
 
 class CampaignBody extends React.Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     campaignId: PropTypes.number.isRequired,
     loadCampaign: PropTypes.func.isRequired,
     campaign: PropTypes.object,
@@ -32,7 +34,7 @@ class CampaignBody extends React.Component {
     }
 
     if (_.isEmpty(campaign)) {
-      return <Redirect to={'/'} />;
+      return <Redirect to={"/"} />;
     }
 
     return (

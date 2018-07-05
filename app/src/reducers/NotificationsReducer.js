@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import {TYPES} from 'actions/NotificationActions';
+import _ from "lodash";
+import {TYPES} from "actions/NotificationActions";
 
 const INITIAL_STATE = {
   isLoggedIn: false,

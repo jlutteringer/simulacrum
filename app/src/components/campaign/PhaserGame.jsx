@@ -1,9 +1,16 @@
-import React, {Component} from 'react';
-import GameActions from 'actions/GameActions';
-import ClientActions from 'actions/ClientActions';
-import GameMediator from 'actions/GameMediatorActions';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import GameActions from "actions/GameActions";
+import ClientActions from "actions/ClientActions";
+import GameMediator from "actions/GameMediatorActions";
 
 class PhaserGame extends Component {
+  static propTypes = {
+    campaign: PropTypes.object.isRequired,
+    token: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+  };
+
   componentDidMount() {
     this.gameMediator = new GameMediator();
 
