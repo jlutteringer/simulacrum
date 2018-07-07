@@ -1,7 +1,9 @@
 package alloy.simulacrum.api.user.notification
 
+import alloy.simulacrum.api.Pageable
 import alloy.simulacrum.api.user.User
-import org.jetbrains.exposed.sql.select
+import alloy.simulacrum.api.withPageable
+import org.jetbrains.exposed.sql.selectAll
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Service
@@ -16,10 +18,9 @@ class NotificationService {
     lateinit var template: SimpMessagingTemplate
 
     @Transactional
-    fun getNotifications(user: User): List<NotificationDTO> {
+    fun getNotifications(user: User, pageable: Pageable): List<NotificationDTO> {
         return Notifications
-                .select { Notifications.user eq user.id }
-                .orderBy(Notifications.created to false)
+                .withPageable(pageable)
                 .map { Notification.wrapRow(it) }
                 .map { NotificationDTO(it) }
     }

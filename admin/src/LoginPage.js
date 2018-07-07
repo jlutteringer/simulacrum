@@ -35,17 +35,10 @@ const styles = function styles(theme) {
 };
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props)
-
-    this.loginSuccess = this.loginSuccess.bind(this)
-    this.loginFailure = this.loginFailure.bind(this)
-  }
-
-  loginSuccess(googleUser) {
+  loginSuccess = (googleUser) => {
     this.props.userLogin(googleUser);
   }
-  loginFailure(error) {
+  loginFailure = (error) => {
 
   }
 

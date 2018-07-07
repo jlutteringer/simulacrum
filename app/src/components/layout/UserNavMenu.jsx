@@ -16,6 +16,7 @@ const styles = (theme) => ({
 
 class UserNavMenu extends Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
     handleLogoutClick: PropTypes.func.isRequired,
   };
 

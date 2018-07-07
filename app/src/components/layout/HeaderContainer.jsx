@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoading: state.user.isLoading,
     notifications: state.notifications.instances,
     isLoadingNotifications: state.isLoadingNotifications,
+    reloadNotificationsInterval: 60000,
   };
 };
 

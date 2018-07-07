@@ -62,6 +62,12 @@ fun Query.withOptionalLimit(limit: Int?, offset: Int?): Query {
     return this
 }
 
+fun LongIdTable.withPageable(pageable: Pageable): Query {
+    return this.withOptionalWhere(this, pageable.filterField, pageable.filterValues)
+            .withOptionalOrderBy(this, pageable.sortField, pageable.sortDirection)
+            .withOptionalLimit(pageable.limit, pageable.offset)
+}
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Page<T>(val entries: List<T>, val total: Int, val offset: Int?, val limit: Int?)
 

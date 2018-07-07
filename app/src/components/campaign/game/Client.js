@@ -1,7 +1,7 @@
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 
-export default class ClientActions {
+export default class Client {
   constructor(mediator, config, token, userId) {
     this.config = config;
     this.token = token;
@@ -9,15 +9,14 @@ export default class ClientActions {
     this.userId = userId;
     this.mediator = mediator;
     this.mediator.setClient(this);
+
+    this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
+    this.stompClient = Stomp.over(this.socket);
   }
 
   connect() {
     const self = this;
-
-    this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
-    this.stompClient = Stomp.over(this.socket);
     this.stompClient.connect({}, function(frame) {
-      self.isConnected = true;
       self.stompClient.subscribe(`/api/ws/topic/campaigns/${self.campaignId}`, function(message) {
         const responseBody = JSON.parse(message.body);
         if (responseBody.userId !== self.userId) {
@@ -30,7 +29,7 @@ export default class ClientActions {
   }
 
   disconnect() {
-    if (this.isConnected) {
+    if (this.stompClient.connected) {
       this.stompClient.disconnect();
     }
   }
@@ -38,21 +37,23 @@ export default class ClientActions {
   // Local Events
   sendClientJoin() {
     this.send({
-      'type': 'join',
+      "type": "join",
     });
   }
 
   localLongPress(x, y) {
     this.send({
-      'type': 'click',
+      "type": "click",
       x,
       y,
     });
   }
 
   send(action) {
-    if (this.isConnected) {
+    if (this.stompClient.connected) {
       this.stompClient.send(`/api/ws/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action));
+    } else {
+      // TODO What to do with actions that aren't sent? Queue?
     }
   }
 

@@ -65,9 +65,7 @@ class UserService : UserDetailsService {
     @Transactional
     fun findAllUsers(pageable: Pageable): Page<UserDTO> {
         val users = Users
-                .withOptionalWhere(Users, pageable.filterField, pageable.filterValues)
-                .withOptionalOrderBy(Users, pageable.sortField, pageable.sortDirection)
-                .withOptionalLimit(pageable.limit, pageable.offset)
+                .withPageable(pageable)
                 .map { User.wrapRow(it) }
                 .map { UserDTO(it) }
 

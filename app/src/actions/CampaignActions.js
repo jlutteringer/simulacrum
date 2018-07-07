@@ -1,27 +1,27 @@
-import axios from 'axios';
-import {history} from 'App';
+import axios from "axios";
+import {history} from "index";
 
 export const TYPES = {
-  LOAD_CAMPAIGN_START: 'LOAD_CAMPAIGN_START',
-  LOAD_CAMPAIGN_SUCCESS: 'LOAD_CAMPAIGN_SUCCESS',
-  LOAD_CAMPAIGN_FAILURE: 'LOAD_CAMPAIGN_FAILURE',
-  LOAD_CAMPAIGNS_START: 'LOAD_CAMPAIGNS_START',
-  LOAD_CAMPAIGNS_SUCCESS: 'LOAD_CAMPAIGNS_SUCCESS',
-  LOAD_CAMPAIGNS_FAILURE: 'LOAD_CAMPAIGNS_FAILURE',
-  ADD_CAMPAIGN_SUCCESS: 'ADD_CAMPAIGN_SUCCESS',
-  ADD_CAMPAIGN_FAILURE: 'ADD_CAMPAIGN_FAILURE',
-  CREATE_CAMPAIGN_SUCCESS: 'CREATE_CAMPAIGN_SUCCESS',
-  CREATE_CAMPAIGN_FAILURE: 'CREATE_CAMPAIGN_FAILURE',
-  INVITE_PLAYER_SUCCESS: 'INVITE_PLAYER_SUCCESS',
-  INVITE_PLAYER_FAILURE: 'INVITE_PLAYER_FAILURE',
-  ACCEPT_INVITE_SUCCESS: 'ACCEPT_INVITE_SUCCESS',
-  ACCEPT_INVITE_FAILURE: 'ACCEPT_INVITE_FAILURE',
+  LOAD_CAMPAIGN_START: "LOAD_CAMPAIGN_START",
+  LOAD_CAMPAIGN_SUCCESS: "LOAD_CAMPAIGN_SUCCESS",
+  LOAD_CAMPAIGN_FAILURE: "LOAD_CAMPAIGN_FAILURE",
+  LOAD_CAMPAIGNS_START: "LOAD_CAMPAIGNS_START",
+  LOAD_CAMPAIGNS_SUCCESS: "LOAD_CAMPAIGNS_SUCCESS",
+  LOAD_CAMPAIGNS_FAILURE: "LOAD_CAMPAIGNS_FAILURE",
+  ADD_CAMPAIGN_SUCCESS: "ADD_CAMPAIGN_SUCCESS",
+  ADD_CAMPAIGN_FAILURE: "ADD_CAMPAIGN_FAILURE",
+  CREATE_CAMPAIGN_SUCCESS: "CREATE_CAMPAIGN_SUCCESS",
+  CREATE_CAMPAIGN_FAILURE: "CREATE_CAMPAIGN_FAILURE",
+  INVITE_PLAYER_SUCCESS: "INVITE_PLAYER_SUCCESS",
+  INVITE_PLAYER_FAILURE: "INVITE_PLAYER_FAILURE",
+  ACCEPT_INVITE_SUCCESS: "ACCEPT_INVITE_SUCCESS",
+  ACCEPT_INVITE_FAILURE: "ACCEPT_INVITE_FAILURE",
 };
 
 export function loadCampaigns() {
   return (dispatch, getState) => {
     dispatch(loadCampaignsStart());
-    return axios.get(`/api/campaigns/currentUser`)
+    return axios.get("/api/campaigns/currentUser")
     .then((response) => {
       dispatch(loadCampaignsSuccess(response.data));
     }).catch((error) => {
@@ -44,7 +44,7 @@ export function loadCampaign(campaignId) {
 
 export function createCampaign(campaign) {
   return (dispatch, getState) => {
-    return axios.post(`/api/campaigns`, campaign)
+    return axios.post("/api/campaigns", campaign)
     .then((response) => {
       dispatch(createCampaignSuccess(response.data));
       history.push(`/campaigns/${response.data.id}/info`);
@@ -56,7 +56,7 @@ export function createCampaign(campaign) {
 
 export function invitePlayer(campaignId, username) {
   return (dispatch, getState) => {
-    return axios.post(`/api/campaigns/invite`, {campaignId, username})
+    return axios.post("/api/campaigns/invite", {campaignId, username})
     .then((response) => {
       dispatch(invitePlayerSuccess(response.data));
     }).catch((error) => {

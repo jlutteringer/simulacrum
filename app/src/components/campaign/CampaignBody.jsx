@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import _ from "lodash";
-import PhaserGame from "components/campaign/PhaserGame";
+import GameContainer from "components/campaign/game/GameContainer";
 import {Redirect} from "react-router-dom";
 
 const styles = (themes) => ({
@@ -39,7 +39,7 @@ class CampaignBody extends React.Component {
 
     return (
         <div className={classes.root}>
-          <PhaserGame {...this.props} />
+          <GameContainer {...this.props} />
           {/* Implement sidebar*/}
         </div>
     );

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export function notificationReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case TYPES.LOAD_NOTIFICATIONS_START:
-      return {...state, instances: [], isLoadingNotifications: true};
+      return {...state, isLoadingNotifications: true};
     case TYPES.LOAD_NOTIFICATIONS_SUCCESS:
       return {...state, instances: action.notifications,
         isLoadingNotifications: false};

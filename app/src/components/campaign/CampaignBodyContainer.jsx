@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     campaign: state.campaigns.current !== null &&
                state.campaigns.current.id === ownProps.campaignId ? state.campaigns.current : null,
     token: state.user.token,
-    userId: state.user.info.userId,
+    userId: state.user.info.id,
     isLoading: state.campaigns.isLoading ||
       state.campaigns.current === null ||
       state.campaigns.current.id !== ownProps.campaignId,

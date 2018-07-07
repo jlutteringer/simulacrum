@@ -18,6 +18,7 @@ class UserNotificationMenu extends Component {
   static propTypes = {
     markNotificationRead: PropTypes.func.isRequired,
     loadNotifications: PropTypes.func.isRequired,
+    reloadNotificationsInterval: PropTypes.number.isRequired,
     notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
@@ -28,26 +29,44 @@ class UserNotificationMenu extends Component {
     };
   }
 
-  handleClick = (event) => {
+  handleMenuOpen = (event) => {
+    // Prevent reloading menu while menu is open
+    this.cancelLoadNotifications();
     this.setState({anchorEl: event.currentTarget});
+  };
+
+  handleMenuClose = () => {
+    this.scheduleLoadNotifications();
+    this.setState({anchorEl: null});
   };
 
   handleMessageClick = (notificationId) => (event) => {
     this.setState({currentNotificationId: notificationId});
   };
 
-  handleMenuClose() {
-    this.setState({anchorEl: null});
-  }
-
-  clearOpenNotification() {
+  clearOpenNotification = () => {
     this.props.markNotificationRead(this.state.currentNotificationId);
     this.setState({currentNotificationId: -1});
+  };
+
+  scheduleLoadNotifications() {
+    this.interval = setInterval(() => {
+      this.props.loadNotifications();
+    }, this.props.reloadNotificationsInterval);
+  }
+
+  cancelLoadNotifications() {
+    clearInterval(this.interval);
+  }
+
+  componentWillUnmount() {
+    this.cancelLoadNotifications();
   }
 
   componentDidMount() {
     // TODO subscribe to notifications?
     this.props.loadNotifications();
+    this.scheduleLoadNotifications();
   }
 
   renderNotificationIcon(notification) {
@@ -136,7 +155,7 @@ class UserNotificationMenu extends Component {
             <IconButton
               aria-owns={anchorEl ? "simple-menu" : null}
               aria-haspopup="true"
-              onClick={this.handleClick}
+              onClick={this.handleMenuOpen}
               color={"inherit"}
             >
               {unreadMessages === 0 && <MailIcon />}

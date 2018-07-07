@@ -1,4 +1,8 @@
-export default class ClientActions {
+/**
+ * Handles the communication between a client and game.
+ * TODO Implement null checks / queueing of requests
+ */
+export default class ClientGameMediator {
   setGame(game) {
     this.game = game;
   }

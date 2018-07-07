@@ -1,11 +1,13 @@
 package alloy.simulacrum.api.game
 
-import alloy.simulacrum.api.*
+import alloy.simulacrum.api.Page
+import alloy.simulacrum.api.Pageable
 import alloy.simulacrum.api.user.User
 import alloy.simulacrum.api.user.UserService
 import alloy.simulacrum.api.user.Users
 import alloy.simulacrum.api.user.notification.NotificationDTO
 import alloy.simulacrum.api.user.notification.NotificationService
+import alloy.simulacrum.api.withPageable
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.or
 import org.jetbrains.exposed.sql.select
@@ -97,10 +99,8 @@ class CampaignService(val notificationService: NotificationService, val userServ
 
     @Transactional(readOnly = true)
     fun findAllCampaigns(pageable: Pageable): Page<CampaignDTO> {
-        val campaigns = Campaigns
-                .withOptionalWhere(Campaigns, pageable.filterField, pageable.filterValues)
-                .withOptionalOrderBy(Campaigns, pageable.sortField, pageable.sortDirection)
-                .withOptionalLimit(pageable.limit, pageable.offset)
+        val campaigns = Campaigns.
+                withPageable(pageable)
                 .map { Campaign.wrapRow(it) }
                 .map { CampaignDTO(it) }
 
@@ -165,7 +165,7 @@ class CampaignService(val notificationService: NotificationService, val userServ
     @Transactional
     fun declineInvite(user: User, token: String) {
         // TODO update to use DB
-        if(!map.contains(token)) {
+        if(!map.containsKey(token)) {
             throw IllegalStateException()
         }
         val invite = map[token]!!

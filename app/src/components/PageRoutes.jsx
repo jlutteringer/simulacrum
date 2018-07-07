@@ -54,7 +54,7 @@ const AuthenticatedRoute = ({component: Component, isLoggedIn, ...rest}) => (
 );
 
 AuthenticatedRoute.propTypes = {
-  component: PropTypes.object.isRequired,
+  component: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
