@@ -9,13 +9,12 @@ export default class Client {
     this.userId = userId;
     this.mediator = mediator;
     this.mediator.setClient(this);
-
-    this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
-    this.stompClient = Stomp.over(this.socket);
   }
 
   connect() {
     const self = this;
+    this.socket = new SockJS(`/api/ws?access_token=${this.token}`);
+    this.stompClient = Stomp.over(this.socket);
     this.stompClient.connect({}, function(frame) {
       self.stompClient.subscribe(`/api/ws/topic/campaigns/${self.campaignId}`, function(message) {
         const responseBody = JSON.parse(message.body);
@@ -50,7 +49,7 @@ export default class Client {
   }
 
   send(action) {
-    if (this.stompClient.connected) {
+    if (this.stompClient && this.stompClient.connected) {
       this.stompClient.send(`/api/ws/app/campaigns/${this.campaignId}`, {}, JSON.stringify(action));
     } else {
       // TODO What to do with actions that aren't sent? Queue?

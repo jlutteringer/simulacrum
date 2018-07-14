@@ -26,10 +26,6 @@ export default class Game extends Phaser.Game {
     // load all of the campaign assets
   }
 
-  stop() {
-    this.destroy();
-  }
-
   resize(width, height) {
     this.width = width;
     this.height = height - 100;
@@ -37,14 +33,4 @@ export default class Game extends Phaser.Game {
     // this.stage.bounds.height = height;
     this.renderer.resize(width, height);
   }
-
-  onDownClickGrid = (target, pointer) => {
-    console.log(target);
-    console.log(pointer);
-  };
-
-  onUpClickGrid = (target, pointer) => {
-    console.log(target);
-    console.log(pointer);
-  };
 }

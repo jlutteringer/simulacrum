@@ -1,5 +1,6 @@
 package alloy.simulacrum.api.config
 
+import alloy.simulacrum.api.game.CampaignEntities
 import alloy.simulacrum.api.game.CampaignPlayers
 import alloy.simulacrum.api.game.Campaigns
 import alloy.simulacrum.api.user.Permissions
@@ -29,7 +30,7 @@ class DatabaseConfig(private val dataSource: DataSource) {
         Database.connect(dataSource)
         return transaction {
             createMissingTablesAndColumns(Users, Roles, Permissions, Campaigns, Notifications,
-                    CampaignPlayers)
+                    CampaignPlayers, CampaignEntities)
         }
     }
 

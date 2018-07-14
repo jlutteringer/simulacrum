@@ -1,3 +1,4 @@
+import configureAxios from "config/axiosConfig";
 import configureStore from "config/storeConfig";
 import createHistory from "history/createBrowserHistory";
 import React from "react";
@@ -7,6 +8,7 @@ import App from "./App";
 
 export const history = createHistory();
 const store = configureStore(history);
+configureAxios(history, store);
 
 const root = document.getElementById("root");
 ReactDOM.render(<App store={store} history={history}/>, root);

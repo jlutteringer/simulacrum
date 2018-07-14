@@ -1,5 +1,4 @@
 import Phaser from "components/campaign/game/Phaser";
-import InputManager from "components/campaign/game/InputManager";
 
 export default class extends Phaser.State {
   constructor(mediator, config, userId) {
@@ -8,8 +7,8 @@ export default class extends Phaser.State {
     this.config = config;
     this.mediator = mediator;
 
-    this.borderOffset = 50;
-    this.squareLength = 50;
+    this.borderOffset = 32;
+    this.squareLength = 32;
   }
 
   init() {
@@ -18,16 +17,10 @@ export default class extends Phaser.State {
   }
 
   preload() {
-    // this.game.load.image("gametitle", "assets/sprites/gametitle.png");
+
   }
 
   create() {
-    this.inputManager = new InputManager(this.game);
-    this.inputManager.onDrag.add(this.onDrag, this);
-    this.inputManager.onTap.add(this.onTap, this);
-    this.inputManager.onHold.add(this.onHold, this);
-    this.inputManager.onCursor.add(this.onCursor, this);
-
     this.playerMap = {};
 
     // create a group for our graphics
@@ -41,6 +34,20 @@ export default class extends Phaser.State {
     this.game.world.setBounds(0, 0,
         this.borderOffset * 2 + this.squareLength * currentScene.width,
         this.borderOffset * 2 + this.squareLength * currentScene.height);
+
+    // this.map = this.game.add.tilemap("mapmaker");
+    this.map = this.game.add.tilemap();
+    this.tileset = this.map.addTilesetImage("grass_biome");
+
+    // TODO create the current scene
+    this.backgroundLayer = this.map.create("scene-" + currentScene.sceneId,
+        currentScene.width, currentScene.height, 32, 32);
+    this.backgroundLayer.resizeWorld();
+
+    this.currentLayer = this.backgroundLayer;
+    this.currentTile = 0;
+
+    this.createTileSelector();
 
     this.drawGrid(this.group, currentScene);
   }
@@ -57,55 +64,86 @@ export default class extends Phaser.State {
             this.squareLength);
       }
     }
+
+    grid.inputEnabled = true;
+    grid.input.enableDrag();
+    grid.events.onDragStart.add(this.gridOnDragStart, this);
+    grid.events.onDragUpdate.add(this.gridOnDragUpdate, this);
+    grid.events.onDragStop.add(this.gridOnDragStop, this);
+    grid.events.onInputUp.add(this.gridOnInputUp, this);
     group.add(grid); // moves from world stage to group as a child
   }
 
   update() {
-    this.inputManager.update();
+
   }
 
-  onCursor(inputManager, direction) {
-    if (direction === inputManager.CURSOR_DIRECTION.UP) {
-      this.camera.y -= 4;
-    } else if (direction === inputManager.CURSOR_DIRECTION.DOWN) {
-      this.camera.y += 4;
-    } else if (direction === inputManager.CURSOR_DIRECTION.LEFT) {
-      this.camera.x -= 4;
-    } else if (direction === inputManager.CURSOR_DIRECTION.RIGHT) {
-      this.camera.x += 4;
-    }
-  }
+  gridOnDragStart = (grid, pointer, startX, startY) => {
+    this.gridPrevX = startX;
+    this.gridPrevY = startY;
+  };
 
-  onDrag(inputManager, previousPosition, currentPosition) {
+  gridOnDragUpdate = (grid, startPointer, nextX, nextY, snapPointer, fromStart) => {
     // move the camera by the amount the mouse has moved since last update
-    // TODO check if holding a draggable object
-    this.camera.x += previousPosition.x - currentPosition.x;
-    this.camera.y += previousPosition.y - currentPosition.y;
-  }
+    if (nextX !== 0 || nextY !== 0) {
+      this.camera.x -= nextX;
+      this.camera.y -= nextY;
+      grid.reset(0, 0);
+    }
+  };
+
+  gridOnDragStop = (grid, pointer) => {
+
+  };
 
   onHold(inputManager, position) {
     // TODO what else to do on a long press
     this.mediator.localLongPress(position.x, position.y);
   }
 
-  onTap(inputManager, position) {
+  gridOnInputUp = (grid, pointer, isOver) => {
     // TODO find the closest tile to position
     // TODO check if a tile already exists in the tile
     // TODO replace the tile if different than currently expected
+    if ((pointer.timeDown + this.game.input.tapRate) > this.game.time.time) {
+      // Is the creator changing the tile type?
+      this.marker.x = this.currentLayer.getTileX(this.game.input.activePointer.worldX) * 32;
+      this.marker.y = this.currentLayer.getTileY(this.game.input.activePointer.worldY) * 32;
 
-    // Is the creator changing the tile type?
-    let tile = this.game.add.graphics(); // adds to the world stage
-    tile.beginFill(0xAAAAAA);
-    tile.lineStyle(2, 0x444444, 1);
-    tile.drawRect(this.borderOffset, this.borderOffset, this.squareLength, this.squareLength);
-    // tile.drawRect(position.x * this.squareLength + this.borderOffset,
-    //     position.y * this.squareLength + this.borderOffset,
-    //     this.squareLength,
-    //     this.squareLength);
-    tile.endFill();
-    // tile.inputEnabled = true;
-    // tile.input.enableDrag();
-    // tile.input.enableSnap(50, 50, true, true);
-    this.group.add(tile); // moves from world stage to group as a child
+      this.map.putTile(this.currentTile,
+          this.currentLayer.getTileX(this.marker.x),
+          this.currentLayer.getTileY(this.marker.y), this.currentLayer);
+        // map.fill(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), 4, 4, currentLayer);
+    } else if ((pointer.timeDown + this.game.input.tapRate) > this.game.time.time) {
+      // What to do with double tap?
+    }
+  };
+
+  createTileSelector() {
+    //  Our tile selection window
+    let tileSelector = this.game.add.group();
+
+    let tileSelectorBackground = this.game.make.graphics();
+    tileSelectorBackground.beginFill(0x000000, 0.5);
+    tileSelectorBackground.drawRect(0, 0, 800, 34);
+    tileSelectorBackground.endFill();
+
+    tileSelector.add(tileSelectorBackground);
+
+    // TODO update color palette
+    let tileStrip = tileSelector.create(1, 1, "ground_1x1");
+    tileStrip.inputEnabled = true;
+    tileStrip.events.onInputDown.add(this.pickTile, this);
+
+    tileSelector.fixedToCamera = true;
+
+    //  Our painting marker
+    this.marker = this.game.add.graphics();
+    this.marker.lineStyle(2, 0x000000, 1);
+    this.marker.drawRect(0, 0, 32, 32);
+  }
+
+  pickTile(sprite, pointer) {
+    this.currentTile = this.game.math.snapToFloor(pointer.x, 32) / 32;
   }
 }

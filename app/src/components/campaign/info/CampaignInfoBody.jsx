@@ -1,3 +1,4 @@
+import EntityGrid from "components/campaign/info/EntityGrid";
 import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
@@ -7,8 +8,7 @@ import InvitePlayerForm from "components/campaign/info/InvitePlayerForm";
 
 const styles = (themes) => ({
   campaignInfoContainer: {
-    display: "flex",
-    justifyContent: "center",
+
   },
 });
 
@@ -30,15 +30,20 @@ class CampaignInfoBody extends React.Component {
   }
 
   renderCreatorView() {
-    return <InvitePlayerForm {...this.props} />;
+    return <React.Fragment>
+      <EntityGrid {...this.props} />
+      <InvitePlayerForm {...this.props} />;
+    </React.Fragment>;
   }
 
   renderPlayerView() {
-    return null;
+    return <React.Fragment>
+      <EntityGrid {...this.props}/>
+    </React.Fragment>;
   }
 
   render() {
-    const {isCreator, classes, isLoading, campaign} = this.props;
+    const {isCreator, isLoading, campaign} = this.props;
 
     if (isLoading) {
       return null;
@@ -49,7 +54,7 @@ class CampaignInfoBody extends React.Component {
     }
 
     return (
-        <div className={classes.campaignInfoContainer}>
+        <React.Fragment>
           {
             isCreator &&
             this.renderCreatorView()
@@ -58,7 +63,7 @@ class CampaignInfoBody extends React.Component {
             !isCreator &&
             this.renderPlayerView()
           }
-        </div>
+        </React.Fragment>
     );
   }
 }

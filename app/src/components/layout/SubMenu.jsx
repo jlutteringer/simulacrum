@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
   root: {
-    "height": 400,
+    "height": 350,
     "flexGrow": 1,
     "display": "flex",
     "color": theme.palette.common.white,

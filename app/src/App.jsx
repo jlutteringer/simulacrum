@@ -8,7 +8,6 @@ import {MuiThemeProvider, createMuiTheme, createGenerateClassName, jssPreset} fr
 import {lightBlue as primary, green as secondary, yellow as accent} from "@material-ui/core/colors";
 import PageRoutesContainer from "./components/PageRoutesContainer";
 import {Provider} from "react-redux";
-import axios from "axios";
 import {ConnectedRouter} from "connected-react-router";
 
 const theme = createMuiTheme({
@@ -23,17 +22,6 @@ const theme = createMuiTheme({
 const jss = create(jssPreset());
 
 const generateClassName = createGenerateClassName();
-
-axios.interceptors.response.use(function(response) {
-  return response;
-}, function(error) {
-  if (401 === error.response.status) {
-    localStorage.clear();
-    window.location = "/login";
-  } else {
-    return Promise.reject(error);
-  }
-});
 
 class App extends Component {
   static propTypes = {

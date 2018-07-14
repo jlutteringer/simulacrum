@@ -2,6 +2,7 @@ package alloy.simulacrum.api.game
 
 import alloy.simulacrum.api.user.User
 import alloy.simulacrum.api.user.Users
+import com.fasterxml.jackson.annotation.JsonInclude
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.LongEntity
 import org.jetbrains.exposed.dao.LongEntityClass
@@ -21,8 +22,10 @@ class Campaign(id: EntityID<Long>) : LongEntity(id) {
     var name by Campaigns.name
     var archived by Campaigns.archived
     var players by User via CampaignPlayers
+    val entities by CampaignEntity referrersOn CampaignEntities.campaign
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class CampaignSummaryDTO(val name: String) {
     var id: Long? = null
     var lastAccessed: DateTime? = null
@@ -32,6 +35,7 @@ data class CampaignSummaryDTO(val name: String) {
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class CampaignDTO(val name: String) {
     var id: Long? = null
     var creator: Long? = null
@@ -40,6 +44,7 @@ data class CampaignDTO(val name: String) {
     var sceneConfigs: List<SceneConfig> = listOf()
     var archived: Boolean? = null
     var playerIds: List<Long>? = null
+    var entities: List<CampaignEntityDTO>? = null
 
     constructor(campaign: Campaign): this(campaign.name) {
         this.id = campaign.id.value
@@ -47,6 +52,9 @@ data class CampaignDTO(val name: String) {
         this.archived = campaign.archived
         this.playerIds = campaign.players.map { it.id.value }
 
+        this.entities = campaign.entities.map {
+            CampaignEntityDTO(it)
+        }
         // TODO pull game config from DB
         gameConfig = GameConfig(0)
 

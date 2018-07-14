@@ -20,6 +20,8 @@ export function userReducer(state = INITIAL_STATE, action) {
         isLoggedIn: true, isLoading: false};
     case TYPES.LOGOUT_USER:
       return {...state, info: null, isLoggedIn: false, isLoading: false};
+    case "TIMEOUT":
+      return {...state, info: null, isLoggedIn: false, isLoading: false};
     default:
       return state;
   }

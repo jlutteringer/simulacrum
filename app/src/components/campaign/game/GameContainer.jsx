@@ -8,7 +8,7 @@ class GameContainer extends Component {
   static propTypes = {
     campaign: PropTypes.object.isRequired,
     token: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
+    userId: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
@@ -19,14 +19,14 @@ class GameContainer extends Component {
 
     // Initialize
     this.game.start();
-    // this.client.connect();
+    this.client.connect();
 
     window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillUnmount() {
-    // this.client.disconnect();
-    this.game.stop();
+    this.client.disconnect();
+    this.game.destroy();
 
     window.removeEventListener("resize", this.updateDimensions);
   }

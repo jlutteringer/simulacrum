@@ -11,7 +11,9 @@ export default class extends Phaser.State {
     this.game.scale.setScreenSize = true;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
-    // this.game.stage.backgroundColor = "#becbfb";
+
+    this.game.load.tilemap("mapmaker", "/assets/test.json", null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image("grass_biome", "/assets/overworld_tileset_grass.png", 16, 16);
   }
 
   render() {

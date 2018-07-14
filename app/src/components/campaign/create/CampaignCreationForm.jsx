@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import {FormTextField} from "components/util/FormTextField";
+import {FormTextField} from "components/util/ReduxFields";
 import PropTypes from "prop-types";
 
 const styles = (theme) => ({
@@ -66,6 +66,6 @@ class CampaignCreationForm extends React.Component {
 }
 
 export default withStyles(styles)(reduxForm({
-  form: "CampaignInfoForm",
+  form: "CampaignCreationForm",
   validate,
 })(CampaignCreationForm));

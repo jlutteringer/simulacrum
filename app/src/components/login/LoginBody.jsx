@@ -35,8 +35,8 @@ const styles = (theme) => ({
 
 class LoginBody extends Component {
   static propTypes = {
-    isLoggedIn: false,
-    isLoading: true,
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     loginSuccess: PropTypes.func.isRequired,
     loginFailure: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
@@ -73,10 +73,7 @@ class LoginBody extends Component {
             <Card className={classes.card}>
               <CardContent className={classes.content}>
                 <div className={classes.row}>
-                  <img src={"/logo.png"} className={classes.appLogo} alt="logo"/>
-                </div>
-                <div className={classes.row}>
-                  <Typography variant="headline">Login with your Google account</Typography>
+                  <Typography variant="headline" gutterBottom>Login</Typography>
                 </div>
                 <GoogleLogin
                     clientId="1071523839085-1t6k75k97n5sec0osdkn7av98qoffael.apps.googleusercontent.com"
